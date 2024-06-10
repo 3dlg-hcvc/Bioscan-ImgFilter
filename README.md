@@ -1,4 +1,4 @@
-# Image-Filtering-Tool
+# Image-Filtering-Tool (need to improve this)
 Detrmines whether an image has a valid or invalid bounding box 
 
 ## 1. Complete, processed coco annotations: 
