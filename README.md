@@ -1,3 +1,6 @@
+# Image-Filtering-Tool
+Detrmines whether an image has a valid or invalid bounding box 
+
 ## 1. Complete, processed coco annotations: 
 
 ```
@@ -21,10 +24,7 @@ python scripts/visualizations.py --goodTrain_folder_path ./data/data_splits/trai
 python scripts/training.py
 ```
 
-
 ## 5. To evaluate the model:
 ```
-python scripts/training.py
+python scripts/eval.py
 ```
-# Image-Filtering-Tool
-Detrmines whether an image has a valid or invalid bounding box 
