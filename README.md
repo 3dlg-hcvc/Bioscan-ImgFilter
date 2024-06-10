@@ -26,3 +26,5 @@ python scripts/training.py
 ```
 python scripts/training.py
 ```
+# Image-Filtering-Tool
+Detrmines whether an image has a valid or invalid bounding box 
