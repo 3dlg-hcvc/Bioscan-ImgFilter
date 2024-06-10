@@ -18,7 +18,6 @@ def get_datasets(train_dir, val_dir):
 
     # Create datasets
     train_data = datasets.ImageFolder(train_dir, transform=train_transforms)
-    print(train_data)
     val_data = datasets.ImageFolder(val_dir, transform=val_transforms)
 
     return train_data, val_data

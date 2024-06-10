@@ -75,6 +75,7 @@ if __name__ == '__main__':
     # Call the function to get the data loaders
     train_loader, val_loader = get_data_loaders(train_data, val_data, batch_size)
 
+    # Train the model
     # Train the model and get the loss and accuracy history
     trained_model, train_loss, val_loss, train_acc, val_acc = train_model(train_loader, val_loader)
 

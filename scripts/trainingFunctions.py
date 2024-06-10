@@ -1,7 +1,8 @@
 from torch.nn.modules.loss import BCEWithLogitsLoss
 from torch.optim import lr_scheduler
 import torch
-from torchvision import models
+import torchvision.models as models
+from torchvision.models import ResNet18_Weights
 import torch.nn as nn
 
 
@@ -30,7 +31,7 @@ def make_train_step(model, optimizer, loss_fn):
 def initialize_model():
    
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    model = models.resnet18(pretrained=True)
+    model = models.resnet18(weights=ResNet18_Weights.DEFAULT)
 
     # Freeze all parameters
     for param in model.parameters():
