@@ -1,9 +1,9 @@
-from sklearn import metrics
+from sklearn.metrics import f1_score
 import torch
 from tqdm import tqdm
 from dataloaders import get_data_loaders, get_datasets
 from trainingFunctions import initialize_model, get_loss_fn, make_train_step
-import matplotlib.pyplot as plt
+
 
 
 def train_model(train_loader, val_loader, n_epochs=10):
@@ -26,7 +26,8 @@ def train_model(train_loader, val_loader, n_epochs=10):
     for epoch in range(n_epochs):
         epoch_loss = 0
         correct_predictions = 0
-        total_predictions = 0
+        all_train_targets = []
+        all_train_predictions = []
 
         # Set the model to training mode
         model.train()
@@ -42,22 +43,31 @@ def train_model(train_loader, val_loader, n_epochs=10):
             epoch_loss += loss.item() / len(train_loader)
             
             # Calculate training accuracy
-            with torch.no_grad():
-                input_predictions = model(input_batch)
-                correct_predictions += calculate_accuracy(input_predictions, target_labels_batch)
+            #with torch.no_grad():
+            input_predictions = model(input_batch)
+            correct_predictions += calculate_accuracy(input_predictions, target_labels_batch)
+
+            # Calculating F1 Score 
+            predicted_labels = torch.sigmoid(input_predictions) > 0.5
+            all_train_targets.extend(target_labels_batch.cpu().numpy())
+            all_train_predictions.extend(predicted_labels.cpu().numpy())
+
 
         train_accuracy = correct_predictions.item() / len(train_loader)
+        train_f1_score = f1_score(all_train_targets, all_train_predictions)
+
         
-        print(f'\nEpoch: {epoch+1}, Train Loss: {epoch_loss}, Train Accuracy: {train_accuracy*100:.4f}%')
+        print(f'\nEpoch: {epoch+1}, Train Loss: {epoch_loss:.4f}, Train Accuracy: {train_accuracy*100:.4f}%, Train F1 Score: {train_f1_score:.4f}')
         epoch_train_acc.append(train_accuracy*100)
         
         epoch_train_loss.append(epoch_loss)
         # Set the model to evaluation mode
         model.eval()
         with torch.no_grad():
-            cum_loss = 0
+            total_val_loss = 0
             correct_predictions = 0
-            total_predictions = 0
+            all_val_predictions = []
+            all_val_targets = []
 
             # Iterate through the validation dataset
             for input_batch, target_labels_batch in val_loader:
@@ -66,22 +76,29 @@ def train_model(train_loader, val_loader, n_epochs=10):
 
                 # Calculate validation loss
                 input_predictions = model(input_batch)
-                val_loss = loss_fn(input_predictions, target_labels_batch)
-                cum_loss += val_loss.item() / len(val_loader)
-                
+                val_loss = loss_fn(input_predictions, target_labels_batch)                
                 
                 # Calculate validation accuracy
                 correct_predictions += calculate_accuracy(input_predictions, target_labels_batch)
 
+                # Calculate vallidation F1 Score 
+                predicted_labels = torch.sigmoid(input_predictions) > 0.5
+                all_val_targets.extend(target_labels_batch.cpu().numpy())
+                all_val_predictions.extend(predicted_labels.cpu().numpy())
+
+            # Accuracy, F1 Score, and los over the entire epoch 
             val_accuracy = correct_predictions.item() / len(val_loader)
-        
-            print(f'Epoch: {epoch+1}, Val Loss: {cum_loss}, Val Accuracy: {val_accuracy*100:.4f}%')
-            epoch_val_loss.append(cum_loss)
+            val_f1_score = f1_score(all_val_targets,all_val_predictions)
+            total_val_loss += val_loss.item() / len(val_loader)
+
+
+            print(f'Epoch: {epoch+1}, Val Loss: {total_val_loss:4f}, Val Accuracy: {val_accuracy*100:.4f}%, Val F1 Score: {val_f1_score:.4f}')
+            epoch_val_loss.append(total_val_loss)
             epoch_val_acc.append(val_accuracy*100)
 
             # Update best model weights if validation loss improves
-            if cum_loss < best_loss:
-                best_loss = cum_loss
+            if total_val_loss < best_loss:
+                best_loss = total_val_loss
                 best_model_wts = model.state_dict()
 
     # Load the best model weights
@@ -99,11 +116,6 @@ def calculate_accuracy(predicted_val, true_val):
     return (predicted_val == true_val).sum()/true_val.size(0)
 
 
-def get_accuracy(y_true, y_prob):
-    assert y_true.ndim == 1 and y_true.size() == y_prob.size()
-    y_prob = y_prob > 0.5
-    return (y_true == y_prob).sum().item() / y_true.size(0)
-
 
 def main():
     # Define the directories containing the data
@@ -114,7 +126,7 @@ def main():
     train_data, val_data = get_datasets(train_dir, val_dir)
 
     # Specify the batch size for the data loaders
-    batch_size = 4
+    batch_size = 32
 
     # Call the function to get the data loaders
     train_loader, val_loader = get_data_loaders(train_data, val_data, batch_size)
