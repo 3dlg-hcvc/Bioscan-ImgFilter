@@ -32,7 +32,7 @@ def eval_single_sample(val_data, model, device):
         
         # Transform tensor to PIL image
         transform = T.ToPILImage()
-        img = transform(sample.squeeze(0).cpu())  # Remove the batch dimension and move to CPU
+        img = transform(sample.squeeze(0).cpu().clamp(0, 1))  # Remove the batch dimension, move to CPU, and clamp values to [0, 1]
         
         img.show()
 
