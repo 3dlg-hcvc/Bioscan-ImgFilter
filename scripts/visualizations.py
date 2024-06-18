@@ -6,7 +6,7 @@ from PIL import Image
 import torch
 from tqdm import tqdm
 from dataloaders import get_data_loaders, get_datasets
-from trainingFunctions import initialize_model, get_loss_fn, make_train_step
+from trainingFunctions import initialize_model, get_loss_fn, train_step
 from training import train_model,calculate_accuracy
 
 import matplotlib.pyplot as plt
@@ -70,7 +70,7 @@ if __name__ == '__main__':
     train_data, val_data = get_datasets(train_dir, val_dir)
 
     # Specify the batch size for the data loaders
-    batch_size = 4
+    batch_size = 32
 
     # Call the function to get the data loaders
     train_loader, val_loader = get_data_loaders(train_data, val_data, batch_size)

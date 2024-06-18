@@ -7,23 +7,22 @@ import torch.nn as nn
 
 
 # Training step for neural network 
-def make_train_step(model, optimizer, loss_fn):
-  def train_step(input_data,target_labels):
-    #make prediction
-    input_predictions = model(input_data)
-    #enter train mode
-    model.train()
-    
-    #compute loss
-    loss = loss_fn(input_predictions,target_labels)
+def train_step(model, optimizer, loss_fn,input_data,target_labels):
 
-    loss.backward()
-    optimizer.step()
-    optimizer.zero_grad()
-    #optimizer.cleargrads()
+  #enter train mode
+  model.train()
 
-    return loss
-  return train_step
+  #make prediction
+  input_predictions = model(input_data)
+  
+  #compute loss
+  loss = loss_fn(input_predictions,target_labels)
+
+  loss.backward()
+  optimizer.step()
+  optimizer.zero_grad()
+
+  return loss
 
 
  

@@ -2,7 +2,7 @@ from sklearn.metrics import f1_score
 import torch
 from tqdm import tqdm
 from dataloaders import get_data_loaders, get_datasets
-from trainingFunctions import initialize_model, get_loss_fn, make_train_step
+from trainingFunctions import initialize_model, get_loss_fn, train_step
 
 
 
@@ -11,7 +11,6 @@ def train_model(train_loader, val_loader, n_epochs=10):
     model, device = initialize_model()
     loss_fn = get_loss_fn()
     optimizer = torch.optim.Adam(model.fc.parameters(), lr=0.001)
-    train_step = make_train_step(model, optimizer, loss_fn)
 
     epoch_train_loss = []
     epoch_val_loss = []
@@ -39,11 +38,10 @@ def train_model(train_loader, val_loader, n_epochs=10):
             target_labels_batch = target_labels_batch.unsqueeze(1).float().to(device)
 
             # Calculate loss and update model parameters
-            loss = train_step(input_batch, target_labels_batch)
+            loss = train_step(model, optimizer, loss_fn,input_batch, target_labels_batch)
             epoch_loss += loss.item() / len(train_loader)
             
             # Calculate training accuracy
-            #with torch.no_grad():
             input_predictions = model(input_batch)
             correct_predictions += calculate_accuracy(input_predictions, target_labels_batch)
 
@@ -58,9 +56,9 @@ def train_model(train_loader, val_loader, n_epochs=10):
 
         
         print(f'\nEpoch: {epoch+1}, Train Loss: {epoch_loss:.4f}, Train Accuracy: {train_accuracy*100:.4f}%, Train F1 Score: {train_f1_score:.4f}')
-        epoch_train_acc.append(train_accuracy*100)
-        
+        epoch_train_acc.append(train_accuracy*100)        
         epoch_train_loss.append(epoch_loss)
+
         # Set the model to evaluation mode
         model.eval()
         with torch.no_grad():
@@ -68,15 +66,19 @@ def train_model(train_loader, val_loader, n_epochs=10):
             correct_predictions = 0
             all_val_predictions = []
             all_val_targets = []
+            
 
             # Iterate through the validation dataset
             for input_batch, target_labels_batch in val_loader:
                 input_batch = input_batch.to(device)
                 target_labels_batch = target_labels_batch.unsqueeze(1).float().to(device)
+                
 
                 # Calculate validation loss
                 input_predictions = model(input_batch)
-                val_loss = loss_fn(input_predictions, target_labels_batch)                
+                val_loss = loss_fn(input_predictions, target_labels_batch)
+                total_val_loss += val_loss.item()/len(val_loader)
+                
                 
                 # Calculate validation accuracy
                 correct_predictions += calculate_accuracy(input_predictions, target_labels_batch)
@@ -89,16 +91,16 @@ def train_model(train_loader, val_loader, n_epochs=10):
             # Accuracy, F1 Score, and los over the entire epoch 
             val_accuracy = correct_predictions.item() / len(val_loader)
             val_f1_score = f1_score(all_val_targets,all_val_predictions)
-            total_val_loss += val_loss.item() / len(val_loader)
 
 
             print(f'Epoch: {epoch+1}, Val Loss: {total_val_loss:4f}, Val Accuracy: {val_accuracy*100:.4f}%, Val F1 Score: {val_f1_score:.4f}')
             epoch_val_loss.append(total_val_loss)
             epoch_val_acc.append(val_accuracy*100)
 
+            best_loss = min(epoch_val_loss)
+
             # Update best model weights if validation loss improves
             if total_val_loss < best_loss:
-                best_loss = total_val_loss
                 best_model_wts = model.state_dict()
 
     # Load the best model weights
