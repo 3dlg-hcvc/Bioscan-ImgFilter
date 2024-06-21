@@ -1,34 +1,32 @@
 from torch.nn.modules.loss import BCEWithLogitsLoss
-from torch.optim import lr_scheduler
 import torch
 import torchvision.models as models
 from torchvision.models import ResNet18_Weights
 import torch.nn as nn
 
 
-# Training step for neural network 
-def train_step(model, optimizer, loss_fn,input_data,target_labels):
+# Training step for neural network
+def train_step(model, optimizer, loss_fn, input_data, target_labels):
 
-  #enter train mode
-  model.train()
+    # enter train mode
+    model.train()
 
-  #make prediction
-  input_predictions = model(input_data)
-  
-  #compute loss
-  loss = loss_fn(input_predictions,target_labels)
+    # make prediction
+    input_predictions = model(input_data)
 
-  loss.backward()
-  optimizer.step()
-  optimizer.zero_grad()
+    # compute loss
+    loss = loss_fn(input_predictions, target_labels)
 
-  return loss
+    loss.backward()
+    optimizer.step()
+    optimizer.zero_grad()
+
+    return loss
 
 
- 
 # Initialize a ResNet18 model with a custom final layer.
 def initialize_model():
-   
+
     device = "cuda" if torch.cuda.is_available() else "cpu"
     model = models.resnet18(weights=ResNet18_Weights.DEFAULT)
 
