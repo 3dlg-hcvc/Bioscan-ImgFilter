@@ -1,7 +1,7 @@
 import torch
 import torchvision.transforms as T
 from dataloaders import get_datasets
-from trainingFunctions import initialize_model
+from training_helperFunctions import initialize_model
 
 # Directories
 train_dir = "./data/data_splits/train"

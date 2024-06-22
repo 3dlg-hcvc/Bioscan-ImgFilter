@@ -1,7 +1,10 @@
 from sklearn.metrics import f1_score
 import torch
+import sys
+import os
 from tqdm import tqdm
-from trainingFunctions import initialize_model, get_loss_fn, train_step, calculate_accuracy
+from training_helperFunctions import initialize_model, get_loss_fn, train_step, calculate_accuracy
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../data_processing")))
 from dataloaders import get_data_loaders, get_datasets
 
 
