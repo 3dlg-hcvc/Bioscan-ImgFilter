@@ -52,8 +52,8 @@ def inspect_labels(dataset):
 
 
 # Define the directories containing the data
-train_dir = "./data/data_splits/train"
-val_dir = "./data/data_splits/val"
+train_dir = "./dataset/data_splits/train"
+val_dir = "./dataset/data_splits/val"
 
 # Get datasets
 train_data, val_data = get_datasets(train_dir, val_dir)

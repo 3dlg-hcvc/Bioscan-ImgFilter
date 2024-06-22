@@ -2,9 +2,18 @@ from sklearn.metrics import f1_score
 import torch
 import sys
 import os
+import wandb
 from tqdm import tqdm
-from training_helperFunctions import initialize_model, get_loss_fn, train_step, calculate_accuracy
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../data_processing")))
+from training_helperFunctions import (
+    initialize_model,
+    get_loss_fn,
+    train_step,
+    calculate_accuracy,
+)
+
+sys.path.append(
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "../data_processing"))
+)
 from dataloaders import get_data_loaders, get_datasets
 
 
@@ -32,6 +41,16 @@ def train_model(train_loader, val_loader, n_epochs=10):
 
         # Set the model to training mode
         model.train()
+
+        # Initialize wandb
+        wandb.init(
+            project="Filtering Images",
+            config={
+                "learning_rate": 0.001,
+                "epochs": n_epochs,
+                "batch_size": train_loader.batch_size,
+            },
+        )
 
         # Iterate through the training dataset
         for i, data in tqdm(enumerate(train_loader), total=len(train_loader)):
@@ -64,6 +83,9 @@ def train_model(train_loader, val_loader, n_epochs=10):
         )
         epoch_train_acc.append(train_accuracy * 100)
         epoch_train_loss.append(epoch_loss)
+
+        # Log training metrics to wandb
+        # wandb.log({"epoch": epoch + 1, "train_loss": epoch_loss, "train_accuracy": train_accuracy, "train_f1_score": train_f1_score})
 
         # Set the model to evaluation mode
         model.eval()
@@ -105,6 +127,15 @@ def train_model(train_loader, val_loader, n_epochs=10):
             epoch_val_loss.append(total_val_loss)
             epoch_val_acc.append(val_accuracy * 100)
 
+            wandb.log(
+                {
+                    "epoch": epoch + 1,
+                    "val_loss": total_val_loss,
+                    "val_accuracy": val_accuracy,
+                    "val_f1_score": val_f1_score,
+                }
+            )
+
             best_loss = min(epoch_val_loss)
 
             # Update best model weights if validation loss improves
@@ -114,13 +145,16 @@ def train_model(train_loader, val_loader, n_epochs=10):
     # Load the best model weights
     model.load_state_dict(best_model_wts)
     # print(epoch_val_acc,epoch_train_acc)
+
+    # Finish the wandb run
+    wandb.finish()
     return model, epoch_train_loss, epoch_val_loss, epoch_train_acc, epoch_val_acc
 
 
 def main():
     # Define the directories containing the data
-    train_dir = "./data/data_splits/train"
-    val_dir = "./data/data_splits/val"
+    train_dir = "./dataset/data_splits/train"
+    val_dir = "./dataset/data_splits/val"
 
     # Call the function to get the datasets
     train_data, val_data = get_datasets(train_dir, val_dir)

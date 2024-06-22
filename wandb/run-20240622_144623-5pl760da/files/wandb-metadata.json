@@ -1,0 +1,128 @@
+{
+    "os": "Linux-5.4.0-156-generic-x86_64-with-glibc2.31",
+    "python": "3.10.14",
+    "heartbeatAt": "2024-06-22T21:46:24.183329",
+    "startedAt": "2024-06-22T21:46:23.869574",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "/local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/scripts/training.py",
+    "codePathLocal": "scripts/training.py",
+    "codePath": "scripts/training.py",
+    "git": {
+        "remote": "https://github.com/3dlg-hcvc/Image-Filtering-Tool.git",
+        "commit": "2ef49f677976be0352a1eca4beb12ea31b1ad922"
+    },
+    "email": "mga113@sfu.ca",
+    "root": "/local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images",
+    "host": "cs-3dlg-06",
+    "username": "mga113",
+    "executable": "/localhome/mga113/miniconda3/envs/BioScan-croptool/bin/python",
+    "cpu_count": 8,
+    "cpu_count_logical": 16,
+    "cpu_freq": {
+        "current": 4778.018375,
+        "min": 800.0,
+        "max": 5000.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 4745.755,
+            "min": 800.0,
+            "max": 5000.0
+        },
+        {
+            "current": 4720.685,
+            "min": 800.0,
+            "max": 5000.0
+        },
+        {
+            "current": 4947.987,
+            "min": 800.0,
+            "max": 5000.0
+        },
+        {
+            "current": 4740.608,
+            "min": 800.0,
+            "max": 5000.0
+        },
+        {
+            "current": 4793.117,
+            "min": 800.0,
+            "max": 5000.0
+        },
+        {
+            "current": 4809.42,
+            "min": 800.0,
+            "max": 5000.0
+        },
+        {
+            "current": 4706.026,
+            "min": 800.0,
+            "max": 5000.0
+        },
+        {
+            "current": 4782.453,
+            "min": 800.0,
+            "max": 5000.0
+        },
+        {
+            "current": 4711.142,
+            "min": 800.0,
+            "max": 5000.0
+        },
+        {
+            "current": 4786.818,
+            "min": 800.0,
+            "max": 5000.0
+        },
+        {
+            "current": 4932.838,
+            "min": 800.0,
+            "max": 5000.0
+        },
+        {
+            "current": 4725.84,
+            "min": 800.0,
+            "max": 5000.0
+        },
+        {
+            "current": 4869.29,
+            "min": 800.0,
+            "max": 5000.0
+        },
+        {
+            "current": 4705.319,
+            "min": 800.0,
+            "max": 5000.0
+        },
+        {
+            "current": 4708.589,
+            "min": 800.0,
+            "max": 5000.0
+        },
+        {
+            "current": 4762.407,
+            "min": 800.0,
+            "max": 5000.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 116.77696228027344,
+            "used": 71.2127456665039
+        }
+    },
+    "gpu": "GeForce RTX 2080 Ti",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "GeForce RTX 2080 Ti",
+            "memory_total": 11551440896
+        }
+    ],
+    "memory": {
+        "total": 62.71275329589844
+    }
+}

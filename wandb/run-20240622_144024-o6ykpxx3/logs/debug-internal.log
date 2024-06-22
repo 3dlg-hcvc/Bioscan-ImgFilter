@@ -1,0 +1,392 @@
+2024-06-22 14:40:24,658 INFO    StreamThr :4154091 [internal.py:wandb_internal():85] W&B internal server running at pid: 4154091, started at: 2024-06-22 14:40:24.657829
+2024-06-22 14:40:24,658 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: status
+2024-06-22 14:40:24,659 INFO    WriterThread:4154091 [datastore.py:open_for_write():87] open: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/run-o6ykpxx3.wandb
+2024-06-22 14:40:24,660 DEBUG   SenderThread:4154091 [sender.py:send():379] send: header
+2024-06-22 14:40:24,661 DEBUG   SenderThread:4154091 [sender.py:send():379] send: run
+2024-06-22 14:40:24,838 INFO    SenderThread:4154091 [dir_watcher.py:__init__():211] watching files in: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files
+2024-06-22 14:40:24,838 INFO    SenderThread:4154091 [sender.py:_start_run_threads():1188] run started: o6ykpxx3 with start time 1719092424.657559
+2024-06-22 14:40:24,892 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: check_version
+2024-06-22 14:40:24,892 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: check_version
+2024-06-22 14:40:24,910 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: run_start
+2024-06-22 14:40:24,912 DEBUG   HandlerThread:4154091 [system_info.py:__init__():26] System info init
+2024-06-22 14:40:24,912 DEBUG   HandlerThread:4154091 [system_info.py:__init__():41] System info init done
+2024-06-22 14:40:24,913 INFO    HandlerThread:4154091 [system_monitor.py:start():194] Starting system monitor
+2024-06-22 14:40:24,913 INFO    SystemMonitor:4154091 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2024-06-22 14:40:24,913 INFO    HandlerThread:4154091 [system_monitor.py:probe():214] Collecting system info
+2024-06-22 14:40:24,913 INFO    SystemMonitor:4154091 [interfaces.py:start():188] Started cpu monitoring
+2024-06-22 14:40:24,913 INFO    SystemMonitor:4154091 [interfaces.py:start():188] Started disk monitoring
+2024-06-22 14:40:24,914 INFO    SystemMonitor:4154091 [interfaces.py:start():188] Started gpu monitoring
+2024-06-22 14:40:24,915 INFO    SystemMonitor:4154091 [interfaces.py:start():188] Started memory monitoring
+2024-06-22 14:40:24,915 INFO    SystemMonitor:4154091 [interfaces.py:start():188] Started network monitoring
+2024-06-22 14:40:24,939 DEBUG   HandlerThread:4154091 [system_info.py:probe():152] Probing system
+2024-06-22 14:40:24,940 DEBUG   HandlerThread:4154091 [system_info.py:_probe_git():137] Probing git
+2024-06-22 14:40:24,943 DEBUG   HandlerThread:4154091 [system_info.py:_probe_git():145] Probing git done
+2024-06-22 14:40:24,943 DEBUG   HandlerThread:4154091 [system_info.py:probe():200] Probing system done
+2024-06-22 14:40:24,943 DEBUG   HandlerThread:4154091 [system_monitor.py:probe():223] {'os': 'Linux-5.4.0-156-generic-x86_64-with-glibc2.31', 'python': '3.10.14', 'heartbeatAt': '2024-06-22T21:40:24.939305', 'startedAt': '2024-06-22T21:40:24.655186', 'docker': None, 'cuda': None, 'args': (), 'state': 'running', 'program': '/local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/scripts/training.py', 'codePathLocal': 'scripts/training.py', 'codePath': 'scripts/training.py', 'git': {'remote': 'https://github.com/3dlg-hcvc/Image-Filtering-Tool.git', 'commit': '2ef49f677976be0352a1eca4beb12ea31b1ad922'}, 'email': 'mga113@sfu.ca', 'root': '/local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images', 'host': 'cs-3dlg-06', 'username': 'mga113', 'executable': '/localhome/mga113/miniconda3/envs/BioScan-croptool/bin/python', 'cpu_count': 8, 'cpu_count_logical': 16, 'cpu_freq': {'current': 4774.771312499999, 'min': 800.0, 'max': 5000.0}, 'cpu_freq_per_core': [{'current': 4743.697, 'min': 800.0, 'max': 5000.0}, {'current': 4900.932, 'min': 800.0, 'max': 5000.0}, {'current': 4739.193, 'min': 800.0, 'max': 5000.0}, {'current': 4735.031, 'min': 800.0, 'max': 5000.0}, {'current': 4761.447, 'min': 800.0, 'max': 5000.0}, {'current': 4797.389, 'min': 800.0, 'max': 5000.0}, {'current': 4753.203, 'min': 800.0, 'max': 5000.0}, {'current': 4784.751, 'min': 800.0, 'max': 5000.0}, {'current': 4740.066, 'min': 800.0, 'max': 5000.0}, {'current': 4797.177, 'min': 800.0, 'max': 5000.0}, {'current': 4734.407, 'min': 800.0, 'max': 5000.0}, {'current': 4758.892, 'min': 800.0, 'max': 5000.0}, {'current': 4785.703, 'min': 800.0, 'max': 5000.0}, {'current': 4740.683, 'min': 800.0, 'max': 5000.0}, {'current': 4914.635, 'min': 800.0, 'max': 5000.0}, {'current': 4709.135, 'min': 800.0, 'max': 5000.0}], 'disk': {'/': {'total': 116.77696228027344, 'used': 71.21240615844727}}, 'gpu': 'GeForce RTX 2080 Ti', 'gpu_count': 1, 'gpu_devices': [{'name': 'GeForce RTX 2080 Ti', 'memory_total': 11551440896}], 'memory': {'total': 62.71275329589844}}
+2024-06-22 14:40:24,943 INFO    HandlerThread:4154091 [system_monitor.py:probe():224] Finished collecting system info
+2024-06-22 14:40:24,943 INFO    HandlerThread:4154091 [system_monitor.py:probe():227] Publishing system info
+2024-06-22 14:40:24,943 DEBUG   HandlerThread:4154091 [system_info.py:_save_conda():209] Saving list of conda packages installed into the current environment
+2024-06-22 14:40:25,839 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_created():271] file/dir created: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/conda-environment.yaml
+2024-06-22 14:40:26,811 DEBUG   HandlerThread:4154091 [system_info.py:_save_conda():224] Saving conda packages done
+2024-06-22 14:40:26,812 INFO    HandlerThread:4154091 [system_monitor.py:probe():229] Finished publishing system info
+2024-06-22 14:40:26,817 DEBUG   SenderThread:4154091 [sender.py:send():379] send: files
+2024-06-22 14:40:26,818 INFO    SenderThread:4154091 [sender.py:_save_file():1454] saving file wandb-metadata.json with policy now
+2024-06-22 14:40:26,838 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/conda-environment.yaml
+2024-06-22 14:40:26,838 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_created():271] file/dir created: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/wandb-metadata.json
+2024-06-22 14:40:26,913 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: python_packages
+2024-06-22 14:40:26,913 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: python_packages
+2024-06-22 14:40:26,914 DEBUG   SenderThread:4154091 [sender.py:send():379] send: telemetry
+2024-06-22 14:40:26,915 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: stop_status
+2024-06-22 14:40:26,915 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:26,915 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: stop_status
+2024-06-22 14:40:27,125 INFO    wandb-upload_0:4154091 [upload_job.py:push():130] Uploaded file /tmp/tmpgzg1s5vdwandb/e750g4ub-wandb-metadata.json
+2024-06-22 14:40:27,838 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_created():271] file/dir created: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/requirements.txt
+2024-06-22 14:40:27,839 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_created():271] file/dir created: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:40:27,914 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:28,914 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:29,721 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: status_report
+2024-06-22 14:40:29,839 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:40:29,914 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:30,914 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:31,839 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:40:31,914 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:31,949 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: partial_history
+2024-06-22 14:40:31,950 DEBUG   SenderThread:4154091 [sender.py:send():379] send: history
+2024-06-22 14:40:31,950 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: summary_record
+2024-06-22 14:40:31,950 INFO    SenderThread:4154091 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-06-22 14:40:32,839 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_created():271] file/dir created: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/wandb-summary.json
+2024-06-22 14:40:32,914 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:32,929 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: partial_history
+2024-06-22 14:40:32,930 DEBUG   SenderThread:4154091 [sender.py:send():379] send: history
+2024-06-22 14:40:32,930 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: summary_record
+2024-06-22 14:40:32,930 INFO    SenderThread:4154091 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-06-22 14:40:32,934 DEBUG   SenderThread:4154091 [sender.py:send():379] send: telemetry
+2024-06-22 14:40:33,840 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/wandb-summary.json
+2024-06-22 14:40:33,840 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:40:33,914 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:34,840 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:40:34,893 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: status_report
+2024-06-22 14:40:34,914 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:35,840 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:40:35,914 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:36,914 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:37,065 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: partial_history
+2024-06-22 14:40:37,065 DEBUG   SenderThread:4154091 [sender.py:send():379] send: history
+2024-06-22 14:40:37,066 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: summary_record
+2024-06-22 14:40:37,066 INFO    SenderThread:4154091 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-06-22 14:40:37,841 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/wandb-summary.json
+2024-06-22 14:40:37,841 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:40:37,914 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:38,064 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: partial_history
+2024-06-22 14:40:38,065 DEBUG   SenderThread:4154091 [sender.py:send():379] send: history
+2024-06-22 14:40:38,065 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: summary_record
+2024-06-22 14:40:38,065 INFO    SenderThread:4154091 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-06-22 14:40:38,841 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/wandb-summary.json
+2024-06-22 14:40:38,841 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:40:38,914 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:39,841 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:40:39,914 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:40,017 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: status_report
+2024-06-22 14:40:40,841 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:40:40,914 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:41,841 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:40:41,913 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: stop_status
+2024-06-22 14:40:41,913 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: stop_status
+2024-06-22 14:40:41,915 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:42,189 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: partial_history
+2024-06-22 14:40:42,191 DEBUG   SenderThread:4154091 [sender.py:send():379] send: history
+2024-06-22 14:40:42,191 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: summary_record
+2024-06-22 14:40:42,191 INFO    SenderThread:4154091 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-06-22 14:40:42,842 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/wandb-summary.json
+2024-06-22 14:40:42,915 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:43,192 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: partial_history
+2024-06-22 14:40:43,193 DEBUG   SenderThread:4154091 [sender.py:send():379] send: history
+2024-06-22 14:40:43,193 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: summary_record
+2024-06-22 14:40:43,193 INFO    SenderThread:4154091 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-06-22 14:40:43,842 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/wandb-summary.json
+2024-06-22 14:40:43,842 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:40:43,915 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:44,842 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:40:44,915 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:45,026 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: status_report
+2024-06-22 14:40:45,842 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:40:45,915 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:46,915 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:47,437 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: partial_history
+2024-06-22 14:40:47,438 DEBUG   SenderThread:4154091 [sender.py:send():379] send: history
+2024-06-22 14:40:47,438 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: summary_record
+2024-06-22 14:40:47,438 INFO    SenderThread:4154091 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-06-22 14:40:47,843 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/wandb-summary.json
+2024-06-22 14:40:47,843 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:40:47,915 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:48,516 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: partial_history
+2024-06-22 14:40:48,516 DEBUG   SenderThread:4154091 [sender.py:send():379] send: history
+2024-06-22 14:40:48,516 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: summary_record
+2024-06-22 14:40:48,517 INFO    SenderThread:4154091 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-06-22 14:40:48,843 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/wandb-summary.json
+2024-06-22 14:40:48,843 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:40:48,915 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:49,843 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:40:49,915 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:50,097 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: status_report
+2024-06-22 14:40:50,843 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:40:50,915 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:51,844 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:40:51,915 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:52,738 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: partial_history
+2024-06-22 14:40:52,738 DEBUG   SenderThread:4154091 [sender.py:send():379] send: history
+2024-06-22 14:40:52,738 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: summary_record
+2024-06-22 14:40:52,739 INFO    SenderThread:4154091 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-06-22 14:40:52,844 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/wandb-summary.json
+2024-06-22 14:40:52,916 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:53,792 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: partial_history
+2024-06-22 14:40:53,792 DEBUG   SenderThread:4154091 [sender.py:send():379] send: history
+2024-06-22 14:40:53,792 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: summary_record
+2024-06-22 14:40:53,793 INFO    SenderThread:4154091 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-06-22 14:40:53,844 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/wandb-summary.json
+2024-06-22 14:40:53,844 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:40:53,915 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:54,844 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:40:54,916 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:55,244 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: status_report
+2024-06-22 14:40:55,845 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/config.yaml
+2024-06-22 14:40:55,845 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:40:55,916 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:56,845 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:40:56,913 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: stop_status
+2024-06-22 14:40:56,913 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: stop_status
+2024-06-22 14:40:56,916 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:57,845 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:40:57,916 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:58,010 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: partial_history
+2024-06-22 14:40:58,011 DEBUG   SenderThread:4154091 [sender.py:send():379] send: history
+2024-06-22 14:40:58,011 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: summary_record
+2024-06-22 14:40:58,011 INFO    SenderThread:4154091 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-06-22 14:40:58,845 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/wandb-summary.json
+2024-06-22 14:40:58,916 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:40:59,009 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: partial_history
+2024-06-22 14:40:59,009 DEBUG   SenderThread:4154091 [sender.py:send():379] send: history
+2024-06-22 14:40:59,009 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: summary_record
+2024-06-22 14:40:59,010 INFO    SenderThread:4154091 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-06-22 14:40:59,845 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/wandb-summary.json
+2024-06-22 14:40:59,846 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:40:59,916 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:41:00,349 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: status_report
+2024-06-22 14:41:00,846 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:41:00,916 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:41:01,846 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:41:01,916 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:41:02,916 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:41:03,283 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: partial_history
+2024-06-22 14:41:03,284 DEBUG   SenderThread:4154091 [sender.py:send():379] send: history
+2024-06-22 14:41:03,284 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: summary_record
+2024-06-22 14:41:03,284 INFO    SenderThread:4154091 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-06-22 14:41:03,846 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/wandb-summary.json
+2024-06-22 14:41:03,846 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:41:03,921 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:41:04,218 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: partial_history
+2024-06-22 14:41:04,218 DEBUG   SenderThread:4154091 [sender.py:send():379] send: history
+2024-06-22 14:41:04,219 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: summary_record
+2024-06-22 14:41:04,219 INFO    SenderThread:4154091 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-06-22 14:41:04,846 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/wandb-summary.json
+2024-06-22 14:41:04,847 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:41:04,921 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:41:05,459 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: status_report
+2024-06-22 14:41:05,847 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:41:05,921 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:41:06,847 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:41:06,921 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:41:07,847 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:41:07,921 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:41:08,379 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: partial_history
+2024-06-22 14:41:08,379 DEBUG   SenderThread:4154091 [sender.py:send():379] send: history
+2024-06-22 14:41:08,379 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: summary_record
+2024-06-22 14:41:08,380 INFO    SenderThread:4154091 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-06-22 14:41:08,847 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/wandb-summary.json
+2024-06-22 14:41:08,921 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:41:09,340 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: partial_history
+2024-06-22 14:41:09,340 DEBUG   SenderThread:4154091 [sender.py:send():379] send: history
+2024-06-22 14:41:09,340 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: summary_record
+2024-06-22 14:41:09,340 INFO    SenderThread:4154091 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-06-22 14:41:09,848 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/wandb-summary.json
+2024-06-22 14:41:09,848 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:41:09,921 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:41:10,616 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: status_report
+2024-06-22 14:41:10,848 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:41:10,921 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:41:11,848 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:41:11,913 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: stop_status
+2024-06-22 14:41:11,914 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: stop_status
+2024-06-22 14:41:11,921 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:41:12,922 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:41:13,548 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: partial_history
+2024-06-22 14:41:13,548 DEBUG   SenderThread:4154091 [sender.py:send():379] send: history
+2024-06-22 14:41:13,548 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: summary_record
+2024-06-22 14:41:13,549 INFO    SenderThread:4154091 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-06-22 14:41:13,848 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/wandb-summary.json
+2024-06-22 14:41:13,849 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:41:13,922 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:41:14,515 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: partial_history
+2024-06-22 14:41:14,516 DEBUG   SenderThread:4154091 [sender.py:send():379] send: history
+2024-06-22 14:41:14,516 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: summary_record
+2024-06-22 14:41:14,516 INFO    SenderThread:4154091 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-06-22 14:41:14,849 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/wandb-summary.json
+2024-06-22 14:41:14,922 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:41:15,777 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: status_report
+2024-06-22 14:41:15,849 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:41:15,922 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:41:16,849 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:41:16,922 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:41:17,849 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:41:17,922 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:41:18,781 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: partial_history
+2024-06-22 14:41:18,782 DEBUG   SenderThread:4154091 [sender.py:send():379] send: history
+2024-06-22 14:41:18,782 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: summary_record
+2024-06-22 14:41:18,782 INFO    SenderThread:4154091 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-06-22 14:41:18,850 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/wandb-summary.json
+2024-06-22 14:41:18,922 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:41:19,787 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: partial_history
+2024-06-22 14:41:19,788 DEBUG   SenderThread:4154091 [sender.py:send():379] send: history
+2024-06-22 14:41:19,788 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: summary_record
+2024-06-22 14:41:19,788 INFO    SenderThread:4154091 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-06-22 14:41:19,789 DEBUG   SenderThread:4154091 [sender.py:send():379] send: telemetry
+2024-06-22 14:41:19,790 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: server_info
+2024-06-22 14:41:19,790 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: server_info
+2024-06-22 14:41:19,850 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/wandb-summary.json
+2024-06-22 14:41:19,850 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:41:19,851 DEBUG   SenderThread:4154091 [sender.py:send():379] send: exit
+2024-06-22 14:41:19,851 INFO    SenderThread:4154091 [sender.py:send_exit():586] handling exit code: 0
+2024-06-22 14:41:19,851 INFO    SenderThread:4154091 [sender.py:send_exit():588] handling runtime: 54
+2024-06-22 14:41:19,851 INFO    SenderThread:4154091 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-06-22 14:41:19,852 INFO    SenderThread:4154091 [sender.py:send_exit():594] send defer
+2024-06-22 14:41:19,852 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: defer
+2024-06-22 14:41:19,852 INFO    HandlerThread:4154091 [handler.py:handle_request_defer():184] handle defer: 0
+2024-06-22 14:41:19,852 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: defer
+2024-06-22 14:41:19,852 INFO    SenderThread:4154091 [sender.py:send_request_defer():610] handle sender defer: 0
+2024-06-22 14:41:19,852 INFO    SenderThread:4154091 [sender.py:transition_state():614] send defer: 1
+2024-06-22 14:41:19,852 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: defer
+2024-06-22 14:41:19,852 INFO    HandlerThread:4154091 [handler.py:handle_request_defer():184] handle defer: 1
+2024-06-22 14:41:19,852 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: defer
+2024-06-22 14:41:19,852 INFO    SenderThread:4154091 [sender.py:send_request_defer():610] handle sender defer: 1
+2024-06-22 14:41:19,852 INFO    SenderThread:4154091 [sender.py:transition_state():614] send defer: 2
+2024-06-22 14:41:19,852 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: defer
+2024-06-22 14:41:19,852 INFO    HandlerThread:4154091 [handler.py:handle_request_defer():184] handle defer: 2
+2024-06-22 14:41:19,852 INFO    HandlerThread:4154091 [system_monitor.py:finish():203] Stopping system monitor
+2024-06-22 14:41:19,852 DEBUG   SystemMonitor:4154091 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2024-06-22 14:41:19,853 DEBUG   SystemMonitor:4154091 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2024-06-22 14:41:19,853 DEBUG   SystemMonitor:4154091 [system_monitor.py:_start():183] Publishing last batch of metrics
+2024-06-22 14:41:19,853 INFO    HandlerThread:4154091 [interfaces.py:finish():200] Joined cpu monitor
+2024-06-22 14:41:19,853 INFO    HandlerThread:4154091 [interfaces.py:finish():200] Joined disk monitor
+2024-06-22 14:41:19,904 INFO    HandlerThread:4154091 [interfaces.py:finish():200] Joined gpu monitor
+2024-06-22 14:41:19,904 INFO    HandlerThread:4154091 [interfaces.py:finish():200] Joined memory monitor
+2024-06-22 14:41:19,904 INFO    HandlerThread:4154091 [interfaces.py:finish():200] Joined network monitor
+2024-06-22 14:41:19,905 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: defer
+2024-06-22 14:41:19,905 INFO    SenderThread:4154091 [sender.py:send_request_defer():610] handle sender defer: 2
+2024-06-22 14:41:19,905 INFO    SenderThread:4154091 [sender.py:transition_state():614] send defer: 3
+2024-06-22 14:41:19,905 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: defer
+2024-06-22 14:41:19,905 INFO    HandlerThread:4154091 [handler.py:handle_request_defer():184] handle defer: 3
+2024-06-22 14:41:19,907 DEBUG   SenderThread:4154091 [sender.py:send():379] send: stats
+2024-06-22 14:41:19,907 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: defer
+2024-06-22 14:41:19,907 INFO    SenderThread:4154091 [sender.py:send_request_defer():610] handle sender defer: 3
+2024-06-22 14:41:19,907 INFO    SenderThread:4154091 [sender.py:transition_state():614] send defer: 4
+2024-06-22 14:41:19,907 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: defer
+2024-06-22 14:41:19,907 INFO    HandlerThread:4154091 [handler.py:handle_request_defer():184] handle defer: 4
+2024-06-22 14:41:19,908 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: defer
+2024-06-22 14:41:19,908 INFO    SenderThread:4154091 [sender.py:send_request_defer():610] handle sender defer: 4
+2024-06-22 14:41:19,908 INFO    SenderThread:4154091 [sender.py:transition_state():614] send defer: 5
+2024-06-22 14:41:19,908 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: defer
+2024-06-22 14:41:19,908 INFO    HandlerThread:4154091 [handler.py:handle_request_defer():184] handle defer: 5
+2024-06-22 14:41:19,908 DEBUG   SenderThread:4154091 [sender.py:send():379] send: summary
+2024-06-22 14:41:19,909 INFO    SenderThread:4154091 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-06-22 14:41:19,909 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: defer
+2024-06-22 14:41:19,909 INFO    SenderThread:4154091 [sender.py:send_request_defer():610] handle sender defer: 5
+2024-06-22 14:41:19,909 INFO    SenderThread:4154091 [sender.py:transition_state():614] send defer: 6
+2024-06-22 14:41:19,909 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: defer
+2024-06-22 14:41:19,909 INFO    HandlerThread:4154091 [handler.py:handle_request_defer():184] handle defer: 6
+2024-06-22 14:41:19,909 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: defer
+2024-06-22 14:41:19,909 INFO    SenderThread:4154091 [sender.py:send_request_defer():610] handle sender defer: 6
+2024-06-22 14:41:19,911 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: status_report
+2024-06-22 14:41:19,997 INFO    SenderThread:4154091 [sender.py:transition_state():614] send defer: 7
+2024-06-22 14:41:19,997 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: defer
+2024-06-22 14:41:19,997 INFO    HandlerThread:4154091 [handler.py:handle_request_defer():184] handle defer: 7
+2024-06-22 14:41:19,997 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: defer
+2024-06-22 14:41:19,997 INFO    SenderThread:4154091 [sender.py:send_request_defer():610] handle sender defer: 7
+2024-06-22 14:41:20,850 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/wandb-summary.json
+2024-06-22 14:41:20,850 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/config.yaml
+2024-06-22 14:41:20,850 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:41:20,851 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: poll_exit
+2024-06-22 14:41:21,850 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:41:21,999 INFO    SenderThread:4154091 [sender.py:transition_state():614] send defer: 8
+2024-06-22 14:41:22,000 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: poll_exit
+2024-06-22 14:41:22,000 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: defer
+2024-06-22 14:41:22,000 INFO    HandlerThread:4154091 [handler.py:handle_request_defer():184] handle defer: 8
+2024-06-22 14:41:22,000 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: defer
+2024-06-22 14:41:22,000 INFO    SenderThread:4154091 [sender.py:send_request_defer():610] handle sender defer: 8
+2024-06-22 14:41:22,000 INFO    SenderThread:4154091 [job_builder.py:build():440] Attempting to build job artifact
+2024-06-22 14:41:22,001 INFO    SenderThread:4154091 [job_builder.py:_get_source_type():569] is repo sourced job
+2024-06-22 14:41:22,015 INFO    SenderThread:4154091 [job_builder.py:build():545] adding wandb-job metadata file
+2024-06-22 14:41:22,020 INFO    SenderThread:4154091 [sender.py:transition_state():614] send defer: 9
+2024-06-22 14:41:22,020 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: defer
+2024-06-22 14:41:22,020 INFO    HandlerThread:4154091 [handler.py:handle_request_defer():184] handle defer: 9
+2024-06-22 14:41:22,020 DEBUG   SenderThread:4154091 [sender.py:send():379] send: artifact
+2024-06-22 14:41:22,419 INFO    SenderThread:4154091 [sender.py:send_artifact():1530] sent artifact job-https___github.com_3dlg-hcvc_Image-Filtering-Tool.git_scripts_training.py - {'id': 'QXJ0aWZhY3Q6OTEyNDQwMzc3', 'state': 'COMMITTED', 'artifactSequence': {'id': 'QXJ0aWZhY3RDb2xsZWN0aW9uOjIyMTExMzAzNA==', 'latestArtifact': {'id': 'QXJ0aWZhY3Q6OTEyNDQ3MDkz', 'versionIndex': 2}}}
+2024-06-22 14:41:22,419 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: defer
+2024-06-22 14:41:22,419 INFO    SenderThread:4154091 [sender.py:send_request_defer():610] handle sender defer: 9
+2024-06-22 14:41:22,419 INFO    SenderThread:4154091 [dir_watcher.py:finish():358] shutting down directory watcher
+2024-06-22 14:41:22,850 INFO    Thread-12 :4154091 [dir_watcher.py:_on_file_modified():288] file/dir modified: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:41:22,851 INFO    SenderThread:4154091 [dir_watcher.py:finish():388] scan: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files
+2024-06-22 14:41:22,851 INFO    SenderThread:4154091 [dir_watcher.py:finish():402] scan save: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/conda-environment.yaml conda-environment.yaml
+2024-06-22 14:41:22,851 INFO    SenderThread:4154091 [dir_watcher.py:finish():402] scan save: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/config.yaml config.yaml
+2024-06-22 14:41:22,852 INFO    SenderThread:4154091 [dir_watcher.py:finish():402] scan save: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/requirements.txt requirements.txt
+2024-06-22 14:41:22,853 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: poll_exit
+2024-06-22 14:41:22,853 INFO    SenderThread:4154091 [dir_watcher.py:finish():402] scan save: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/wandb-metadata.json wandb-metadata.json
+2024-06-22 14:41:22,853 INFO    SenderThread:4154091 [dir_watcher.py:finish():402] scan save: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log output.log
+2024-06-22 14:41:22,853 INFO    SenderThread:4154091 [dir_watcher.py:finish():402] scan save: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/wandb-summary.json wandb-summary.json
+2024-06-22 14:41:22,853 INFO    SenderThread:4154091 [sender.py:transition_state():614] send defer: 10
+2024-06-22 14:41:22,853 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: poll_exit
+2024-06-22 14:41:22,856 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: defer
+2024-06-22 14:41:22,856 INFO    HandlerThread:4154091 [handler.py:handle_request_defer():184] handle defer: 10
+2024-06-22 14:41:22,857 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: defer
+2024-06-22 14:41:22,857 INFO    SenderThread:4154091 [sender.py:send_request_defer():610] handle sender defer: 10
+2024-06-22 14:41:22,859 INFO    SenderThread:4154091 [file_pusher.py:finish():169] shutting down file pusher
+2024-06-22 14:41:23,084 INFO    wandb-upload_1:4154091 [upload_job.py:push():130] Uploaded file /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/config.yaml
+2024-06-22 14:41:23,109 INFO    wandb-upload_0:4154091 [upload_job.py:push():130] Uploaded file /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/conda-environment.yaml
+2024-06-22 14:41:23,143 INFO    wandb-upload_4:4154091 [upload_job.py:push():130] Uploaded file /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/wandb-summary.json
+2024-06-22 14:41:23,146 INFO    wandb-upload_2:4154091 [upload_job.py:push():130] Uploaded file /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/requirements.txt
+2024-06-22 14:41:23,179 INFO    wandb-upload_3:4154091 [upload_job.py:push():130] Uploaded file /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/files/output.log
+2024-06-22 14:41:23,379 INFO    Thread-11 (_thread_body):4154091 [sender.py:transition_state():614] send defer: 11
+2024-06-22 14:41:23,379 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: defer
+2024-06-22 14:41:23,379 INFO    HandlerThread:4154091 [handler.py:handle_request_defer():184] handle defer: 11
+2024-06-22 14:41:23,380 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: defer
+2024-06-22 14:41:23,380 INFO    SenderThread:4154091 [sender.py:send_request_defer():610] handle sender defer: 11
+2024-06-22 14:41:23,380 INFO    SenderThread:4154091 [file_pusher.py:join():175] waiting for file pusher
+2024-06-22 14:41:23,380 INFO    SenderThread:4154091 [sender.py:transition_state():614] send defer: 12
+2024-06-22 14:41:23,380 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: defer
+2024-06-22 14:41:23,380 INFO    HandlerThread:4154091 [handler.py:handle_request_defer():184] handle defer: 12
+2024-06-22 14:41:23,380 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: defer
+2024-06-22 14:41:23,380 INFO    SenderThread:4154091 [sender.py:send_request_defer():610] handle sender defer: 12
+2024-06-22 14:41:23,380 INFO    SenderThread:4154091 [file_stream.py:finish():601] file stream finish called
+2024-06-22 14:41:23,484 INFO    SenderThread:4154091 [file_stream.py:finish():605] file stream finish is done
+2024-06-22 14:41:23,484 INFO    SenderThread:4154091 [sender.py:transition_state():614] send defer: 13
+2024-06-22 14:41:23,484 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: defer
+2024-06-22 14:41:23,484 INFO    HandlerThread:4154091 [handler.py:handle_request_defer():184] handle defer: 13
+2024-06-22 14:41:23,485 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: defer
+2024-06-22 14:41:23,485 INFO    SenderThread:4154091 [sender.py:send_request_defer():610] handle sender defer: 13
+2024-06-22 14:41:23,485 INFO    SenderThread:4154091 [sender.py:transition_state():614] send defer: 14
+2024-06-22 14:41:23,485 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: defer
+2024-06-22 14:41:23,485 INFO    HandlerThread:4154091 [handler.py:handle_request_defer():184] handle defer: 14
+2024-06-22 14:41:23,485 DEBUG   SenderThread:4154091 [sender.py:send():379] send: final
+2024-06-22 14:41:23,485 DEBUG   SenderThread:4154091 [sender.py:send():379] send: footer
+2024-06-22 14:41:23,485 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: defer
+2024-06-22 14:41:23,485 INFO    SenderThread:4154091 [sender.py:send_request_defer():610] handle sender defer: 14
+2024-06-22 14:41:23,486 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: poll_exit
+2024-06-22 14:41:23,486 DEBUG   SenderThread:4154091 [sender.py:send_request():406] send_request: poll_exit
+2024-06-22 14:41:23,486 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: internal_messages
+2024-06-22 14:41:23,487 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: get_summary
+2024-06-22 14:41:23,487 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: sampled_history
+2024-06-22 14:41:23,487 DEBUG   HandlerThread:4154091 [handler.py:handle_request():158] handle_request: shutdown
+2024-06-22 14:41:23,487 INFO    HandlerThread:4154091 [handler.py:finish():882] shutting down handler
+2024-06-22 14:41:24,486 INFO    WriterThread:4154091 [datastore.py:close():296] close: /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_144024-o6ykpxx3/run-o6ykpxx3.wandb
+2024-06-22 14:41:24,486 INFO    SenderThread:4154091 [sender.py:finish():1608] shutting down sender
+2024-06-22 14:41:24,487 INFO    SenderThread:4154091 [file_pusher.py:finish():169] shutting down file pusher
+2024-06-22 14:41:24,487 INFO    SenderThread:4154091 [file_pusher.py:join():175] waiting for file pusher

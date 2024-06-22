@@ -14,6 +14,7 @@ model, device = initialize_model()
 train_data, val_data = get_datasets(train_dir, val_dir)
 
 
+# Evaluate a single sample from the validation data
 def eval_single_sample(val_data, model, device):
     model.eval()  # Set the model to evaluation mode
 
@@ -38,5 +39,5 @@ def eval_single_sample(val_data, model, device):
         img.show()
 
 
-# Evaluate a single sample from the validation data
+# Calling the function to infer whether an image is good/bad
 eval_single_sample(val_data, model, device)

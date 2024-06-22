@@ -49,7 +49,7 @@ def get_loss_fn():
     return BCEWithLogitsLoss()
 
 
-# Calculate the accuracy  
+# Calculate the accuracy
 def calculate_accuracy(predicted_val, true_val):
     # Calculate accuracy using sigmoid function
     predicted_val = torch.sigmoid(predicted_val)

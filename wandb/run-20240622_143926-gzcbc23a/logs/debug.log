@@ -1,0 +1,91 @@
+2024-06-22 14:39:26,242 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Current SDK version is 0.17.2
+2024-06-22 14:39:26,242 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Configure stats pid to 4152971
+2024-06-22 14:39:26,242 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Loading settings from /localhome/mga113/.config/wandb/settings
+2024-06-22 14:39:26,242 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Loading settings from /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/settings
+2024-06-22 14:39:26,242 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2024-06-22 14:39:26,242 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Applying setup settings: {'_disable_service': False}
+2024-06-22 14:39:26,242 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'scripts/training.py', 'program_abspath': '/local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/scripts/training.py', 'program': '/local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/scripts/training.py'}
+2024-06-22 14:39:26,242 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Applying login settings: {}
+2024-06-22 14:39:26,242 INFO    MainThread:4152971 [wandb_init.py:_log_setup():520] Logging user logs to /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_143926-gzcbc23a/logs/debug.log
+2024-06-22 14:39:26,243 INFO    MainThread:4152971 [wandb_init.py:_log_setup():521] Logging internal logs to /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_143926-gzcbc23a/logs/debug-internal.log
+2024-06-22 14:39:26,243 INFO    MainThread:4152971 [wandb_init.py:init():560] calling init triggers
+2024-06-22 14:39:26,243 INFO    MainThread:4152971 [wandb_init.py:init():567] wandb.init called with sweep_config: {}
+config: {'learning_rate': 0.001, 'epochs': 10, 'batch_size': 32}
+2024-06-22 14:39:26,243 INFO    MainThread:4152971 [wandb_init.py:init():605] wandb.init() called when a run is still active
+2024-06-22 14:39:31,312 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Current SDK version is 0.17.2
+2024-06-22 14:39:31,312 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Configure stats pid to 4152971
+2024-06-22 14:39:31,313 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Loading settings from /localhome/mga113/.config/wandb/settings
+2024-06-22 14:39:31,313 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Loading settings from /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/settings
+2024-06-22 14:39:31,313 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2024-06-22 14:39:31,313 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Applying setup settings: {'_disable_service': False}
+2024-06-22 14:39:31,313 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'scripts/training.py', 'program_abspath': '/local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/scripts/training.py', 'program': '/local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/scripts/training.py'}
+2024-06-22 14:39:31,313 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Applying login settings: {}
+2024-06-22 14:39:31,313 INFO    MainThread:4152971 [wandb_init.py:_log_setup():520] Logging user logs to /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_143931-sx02rjg5/logs/debug.log
+2024-06-22 14:39:31,313 INFO    MainThread:4152971 [wandb_init.py:_log_setup():521] Logging internal logs to /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_143931-sx02rjg5/logs/debug-internal.log
+2024-06-22 14:39:31,313 INFO    MainThread:4152971 [wandb_init.py:init():560] calling init triggers
+2024-06-22 14:39:31,313 INFO    MainThread:4152971 [wandb_init.py:init():567] wandb.init called with sweep_config: {}
+config: {'learning_rate': 0.001, 'epochs': 10, 'batch_size': 32}
+2024-06-22 14:39:31,313 INFO    MainThread:4152971 [wandb_init.py:init():605] wandb.init() called when a run is still active
+2024-06-22 14:39:36,501 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Current SDK version is 0.17.2
+2024-06-22 14:39:36,501 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Configure stats pid to 4152971
+2024-06-22 14:39:36,501 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Loading settings from /localhome/mga113/.config/wandb/settings
+2024-06-22 14:39:36,501 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Loading settings from /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/settings
+2024-06-22 14:39:36,501 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2024-06-22 14:39:36,501 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Applying setup settings: {'_disable_service': False}
+2024-06-22 14:39:36,501 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'scripts/training.py', 'program_abspath': '/local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/scripts/training.py', 'program': '/local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/scripts/training.py'}
+2024-06-22 14:39:36,501 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Applying login settings: {}
+2024-06-22 14:39:36,501 INFO    MainThread:4152971 [wandb_init.py:_log_setup():520] Logging user logs to /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_143936-zfntb5ug/logs/debug.log
+2024-06-22 14:39:36,502 INFO    MainThread:4152971 [wandb_init.py:_log_setup():521] Logging internal logs to /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_143936-zfntb5ug/logs/debug-internal.log
+2024-06-22 14:39:36,502 INFO    MainThread:4152971 [wandb_init.py:init():560] calling init triggers
+2024-06-22 14:39:36,502 INFO    MainThread:4152971 [wandb_init.py:init():567] wandb.init called with sweep_config: {}
+config: {'learning_rate': 0.001, 'epochs': 10, 'batch_size': 32}
+2024-06-22 14:39:36,502 INFO    MainThread:4152971 [wandb_init.py:init():605] wandb.init() called when a run is still active
+2024-06-22 14:39:41,639 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Current SDK version is 0.17.2
+2024-06-22 14:39:41,640 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Configure stats pid to 4152971
+2024-06-22 14:39:41,640 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Loading settings from /localhome/mga113/.config/wandb/settings
+2024-06-22 14:39:41,640 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Loading settings from /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/settings
+2024-06-22 14:39:41,640 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2024-06-22 14:39:41,640 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Applying setup settings: {'_disable_service': False}
+2024-06-22 14:39:41,640 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'scripts/training.py', 'program_abspath': '/local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/scripts/training.py', 'program': '/local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/scripts/training.py'}
+2024-06-22 14:39:41,640 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Applying login settings: {}
+2024-06-22 14:39:41,640 INFO    MainThread:4152971 [wandb_init.py:_log_setup():520] Logging user logs to /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_143941-ogd94uo2/logs/debug.log
+2024-06-22 14:39:41,640 INFO    MainThread:4152971 [wandb_init.py:_log_setup():521] Logging internal logs to /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_143941-ogd94uo2/logs/debug-internal.log
+2024-06-22 14:39:41,640 INFO    MainThread:4152971 [wandb_init.py:init():560] calling init triggers
+2024-06-22 14:39:41,640 INFO    MainThread:4152971 [wandb_init.py:init():567] wandb.init called with sweep_config: {}
+config: {'learning_rate': 0.001, 'epochs': 10, 'batch_size': 32}
+2024-06-22 14:39:41,641 INFO    MainThread:4152971 [wandb_init.py:init():605] wandb.init() called when a run is still active
+2024-06-22 14:39:46,822 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Current SDK version is 0.17.2
+2024-06-22 14:39:46,823 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Configure stats pid to 4152971
+2024-06-22 14:39:46,823 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Loading settings from /localhome/mga113/.config/wandb/settings
+2024-06-22 14:39:46,823 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Loading settings from /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/settings
+2024-06-22 14:39:46,823 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2024-06-22 14:39:46,823 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Applying setup settings: {'_disable_service': False}
+2024-06-22 14:39:46,823 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'scripts/training.py', 'program_abspath': '/local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/scripts/training.py', 'program': '/local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/scripts/training.py'}
+2024-06-22 14:39:46,823 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Applying login settings: {}
+2024-06-22 14:39:46,823 INFO    MainThread:4152971 [wandb_init.py:_log_setup():520] Logging user logs to /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_143946-li69b2ii/logs/debug.log
+2024-06-22 14:39:46,823 INFO    MainThread:4152971 [wandb_init.py:_log_setup():521] Logging internal logs to /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_143946-li69b2ii/logs/debug-internal.log
+2024-06-22 14:39:46,823 INFO    MainThread:4152971 [wandb_init.py:init():560] calling init triggers
+2024-06-22 14:39:46,823 INFO    MainThread:4152971 [wandb_init.py:init():567] wandb.init called with sweep_config: {}
+config: {'learning_rate': 0.001, 'epochs': 10, 'batch_size': 32}
+2024-06-22 14:39:46,824 INFO    MainThread:4152971 [wandb_init.py:init():605] wandb.init() called when a run is still active
+2024-06-22 14:39:52,124 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Current SDK version is 0.17.2
+2024-06-22 14:39:52,124 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Configure stats pid to 4152971
+2024-06-22 14:39:52,125 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Loading settings from /localhome/mga113/.config/wandb/settings
+2024-06-22 14:39:52,125 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Loading settings from /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/settings
+2024-06-22 14:39:52,125 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2024-06-22 14:39:52,125 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Applying setup settings: {'_disable_service': False}
+2024-06-22 14:39:52,125 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'scripts/training.py', 'program_abspath': '/local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/scripts/training.py', 'program': '/local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/scripts/training.py'}
+2024-06-22 14:39:52,125 INFO    MainThread:4152971 [wandb_setup.py:_flush():76] Applying login settings: {}
+2024-06-22 14:39:52,125 INFO    MainThread:4152971 [wandb_init.py:_log_setup():520] Logging user logs to /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_143952-tjwqd9u0/logs/debug.log
+2024-06-22 14:39:52,125 INFO    MainThread:4152971 [wandb_init.py:_log_setup():521] Logging internal logs to /local-scratch/localhome/mga113/Documents/Mrinal 2024/Filtering-Images/wandb/run-20240622_143952-tjwqd9u0/logs/debug-internal.log
+2024-06-22 14:39:52,125 INFO    MainThread:4152971 [wandb_init.py:init():560] calling init triggers
+2024-06-22 14:39:52,126 INFO    MainThread:4152971 [wandb_init.py:init():567] wandb.init called with sweep_config: {}
+config: {'learning_rate': 0.001, 'epochs': 10, 'batch_size': 32}
+2024-06-22 14:39:52,126 INFO    MainThread:4152971 [wandb_init.py:init():605] wandb.init() called when a run is still active
+2024-06-22 14:39:57,208 INFO    MainThread:4152971 [wandb_run.py:_finish():2109] finishing run mga113/Filtering Images /3w3abhmo
+2024-06-22 14:39:57,209 INFO    MainThread:4152971 [wandb_run.py:_atexit_cleanup():2349] got exitcode: 0
+2024-06-22 14:39:57,209 INFO    MainThread:4152971 [wandb_run.py:_restore():2332] restore
+2024-06-22 14:39:57,209 INFO    MainThread:4152971 [wandb_run.py:_restore():2338] restore done
+2024-06-22 14:40:03,114 INFO    MainThread:4152971 [wandb_run.py:_footer_history_summary_info():3988] rendering history
+2024-06-22 14:40:03,116 INFO    MainThread:4152971 [wandb_run.py:_footer_history_summary_info():4020] rendering summary
+2024-06-22 14:40:03,129 INFO    MainThread:4152971 [wandb_run.py:_footer_sync_info():3947] logging synced files
