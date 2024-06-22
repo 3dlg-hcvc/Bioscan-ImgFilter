@@ -1,8 +1,8 @@
 from sklearn.metrics import f1_score
 import torch
 from tqdm import tqdm
-from .dataloaders import get_data_loaders, get_datasets
-from .trainingFunctions import initialize_model, get_loss_fn, train_step
+from trainingFunctions import initialize_model, get_loss_fn, train_step, calculate_accuracy
+from dataloaders import get_data_loaders, get_datasets
 
 
 def train_model(train_loader, val_loader, n_epochs=10):
@@ -112,13 +112,6 @@ def train_model(train_loader, val_loader, n_epochs=10):
     model.load_state_dict(best_model_wts)
     # print(epoch_val_acc,epoch_train_acc)
     return model, epoch_train_loss, epoch_val_loss, epoch_train_acc, epoch_val_acc
-
-
-def calculate_accuracy(predicted_val, true_val):
-    # Calculate accuracy using sigmoid function
-    predicted_val = torch.sigmoid(predicted_val)
-    predicted_val = (predicted_val > 0.5).float()
-    return (predicted_val == true_val).sum() / true_val.size(0)
 
 
 def main():

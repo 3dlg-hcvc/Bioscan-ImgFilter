@@ -26,5 +26,5 @@ python scripts/training.py
 
 ## 5. To evaluate the model:
 ```
-python scripts/eval.py
+python scripts/inference.py
 ```
