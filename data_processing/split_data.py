@@ -149,6 +149,18 @@ def split_data_and_copy_image(args):
     print(f"Number of training samples: {len(train_images)}")
     print(f"Number of validation samples: {len(val_images)}")
 
+    # Calculate and print the number of "good" and "bad" images in the training set
+    num_good_train = len(os.listdir(args.goodTrain_folder_path))
+    num_bad_train = len(os.listdir(args.badTrain_folder_path))
+    num_good_val = len(os.listdir(args.goodVal_folder_path))
+    num_bad_val = len(os.listdir(args.badVal_folder_path))
+
+    print(f"Number of good images in train: {num_good_train}")
+    print(f"Number of bad images in train: {num_bad_train}")
+    print(f"Number of good images in validation: {num_good_val}")
+    print(f"Number of bad images in validation: {num_bad_val}")
+
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

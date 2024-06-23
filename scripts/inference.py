@@ -1,11 +1,16 @@
 import torch
 import torchvision.transforms as T
+import os
+import sys
+sys.path.append(
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "../data_processing"))
+)
 from dataloaders import get_datasets
 from training_helperFunctions import initialize_model
 
 # Directories
-train_dir = "./data/data_splits/train"
-val_dir = "./data/data_splits/val"
+train_dir = "./dataset/data_splits/train"
+val_dir = "./dataset/data_splits/val"
 
 # Initialize model
 model, device = initialize_model()
