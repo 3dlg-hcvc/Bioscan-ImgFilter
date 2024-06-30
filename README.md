@@ -1,14 +1,13 @@
 <div style="width: 1000px; font-size: 18px;"
 
-# Bioscan-IMGFILTER
-Classifies images as good or bad based on the presence of a valid bounding box
+#
+# BIOSCAN - IMAGE FILTER
+A specialized image filtering tool that categorizes images into 'good' and 'bad,' reducing the need for manual labeling while enhancing overall robustness.
 
-# Overview
-
-
+# Overview 
 ![Overview](./images/overview.png)
 
-The image filtering tool uses the pre-trained ResNet-18 CNN to classify images based on the presence of a valid bounding box. It automates the image annotation process, saving time and ensuring consistent, standardized classification, thereby eliminating manual dataset labeling. This is particularly advantageous for large-scale image datasets, improving efficiency and accuracy in data preparation. By filtering out images without valid bounding boxes, it maintains dataset integrity, crucial for training reliable machine learning models. ResNet-18’s robustness ensures precise and reliable classification, making it valuable across various machine learning workflows.
+The image filtering tool uses the pre-trained ResNet-18 CNN to classify images based on the presence of a valid bounding box. It automates the image annotation process, saving time and ensuring consistent, standardized classification, thereby reducing the need for manual dataset labeling. This is particularly advantageous for large-scale image datasets, improving efficiency and accuracy in data preparation. By filtering out images without valid bounding boxes, it maintains dataset integrity, crucial for training reliable machine learning models. ResNet-18’s robustness ensures precise and reliable classification, making it valuable across various machine learning workflows.
 <br><br>
 
 # The Model
@@ -27,7 +26,7 @@ The table outlines the ResNet-18 model's strong performance metrics for both tra
 
 # The Dataset
  
-The filtering tool utilizes the "failed crop dataset" subset from Bioscan-1M which primarily consists of images that failed initial cropping attempts. This allows us to tackle the most challenging instances where our current image processing pipeline may struggle, whether due to genuine quality issues or processing failures. Some images are clear and well-defined, with easily identifiable bounding boxes, while others may be blurry or lack adequate bounding box annotations. Integrating this dataset aims to improve the overall performance and accuracy of our image processing system, ensuring robustness across diverse image types and conditions. 
+The filtering tool utilizes the "failed crop dataset" subset from Bioscan-1M, focusing on images that failed initial cropping attempts. This allows us to tackle the most challenging instances where our current image processing pipeline may struggle, whether due to genuine quality issues or processing failures. Some images are clear and well-defined, with easily identifiable bounding boxes, while others may be blurry or lack adequate bounding box annotations. Integrating this dataset aims to improve the overall performance and accuracy of our image processing system, ensuring robustness across diverse image types and conditions. 
 
 What is the format of json in the data_splits directories?
 
@@ -40,7 +39,7 @@ What is the format of json in the data_splits directories?
     - Total Images: 742
     - Good Images: 668
     - Bad Images: 74
-    - Validation Set:
+  - Validation Set:
     - Total Images: 187
     - Good Images: 168
     - Bad Images: 19

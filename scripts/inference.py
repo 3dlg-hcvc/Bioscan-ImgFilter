@@ -18,7 +18,6 @@ model, device = initialize_model()
 # Get datasets
 train_data, val_data = get_datasets(train_dir, val_dir)
 
-
 # Evaluate a single sample from the validation data
 def eval_single_sample(val_data, model, device):
     model.eval()  # Set the model to evaluation mode
