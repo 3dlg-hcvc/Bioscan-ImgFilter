@@ -17,18 +17,20 @@ The ResNet-18 CNN, pretrained on the ImageNet dataset was used for binary classi
 ## i) Performance 
 The model reports increasingly high accuracy and F1 scores complemented by respectively low losses for both the training and validation splits, indicating effective learning and reliable real-world performance.  
 
-![Overview](./images/performance.png)
+![Performance](./images/performance.png)
 
 The table outlines the ResNet-18 model's strong performance metrics for both training and validation splits. As expected, the training split achieves slightly higher accuracy and F1 scores, while the validation split shows a marginally higher loss. These consistently high metrics demonstrate the model's reliability. 
 
 <img src="./images/performance_table.png" alt="Overview" width="800" height="100"><br>
+
 <br>
 
 # The Dataset
- 
-The filtering tool utilizes the "failed crop dataset" subset from Bioscan-1M, focusing on images that failed initial cropping attempts. This allows us to tackle the most challenging instances where our current image processing pipeline may struggle, whether due to genuine quality issues or processing failures. Some images are clear and well-defined, with easily identifiable bounding boxes, while others may be blurry or lack adequate bounding box annotations. Integrating this dataset aims to improve the overall performance and accuracy of our image processing system, ensuring robustness across diverse image types and conditions. 
 
-What is the format of json in the data_splits directories?
+## Subset of the dataset
+![Sample Dataset](./images/sample_dataset.png)
+
+The filtering tool utilizes the "failed crop dataset" subset from Bioscan-1M, focusing on images that failed initial cropping attempts. This allows us to tackle the most challenging instances where our current image processing pipeline may struggle, whether due to genuine quality issues or processing failures. Some images are clear and well-defined, with easily identifiable bounding boxes, while others may be poor quality/blurry. Integrating this dataset aims to improve the overall performance and accuracy of our image processing system, ensuring robustness across diverse image types and conditions. 
 
 ### i) Dataset Consists Of:
 - Diverse set of 929 insect images
@@ -36,13 +38,13 @@ What is the format of json in the data_splits directories?
 
 ### ii) Dataset Partition:
   - Training Set:
-    - Total Images: 742
+    - Total Images: 936
     - Good Images: 668
-    - Bad Images: 74
+    - Bad Images: 268
   - Validation Set:
-    - Total Images: 187
+    - Total Images: 236
     - Good Images: 168
-    - Bad Images: 19
+    - Bad Images: 68
 
 ### iii) Annotations 
 The dataset has been annotated to include bounding boxes identifying objects. Every image containing any object, regardless of its quality, size, or type, is annotated with a bounding box. Only completely empty dish images are not annotated with a bounding box. 

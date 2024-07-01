@@ -40,7 +40,8 @@ def add_missing_information_to_coco_json(coco_annotation_dict):
     return images, annotations
 
 
-def remove_empty_annotations(coco_annotation_dict):
+
+def idx_to_annotations(coco_annotation_dict):
     images, annotations, categories = (
         coco_annotation_dict["images"],
         coco_annotation_dict["annotations"],
@@ -48,11 +49,6 @@ def remove_empty_annotations(coco_annotation_dict):
     )
 
     annotations = annotations[0 : len(images)]
-
-    for idx, ann in enumerate(annotations):
-        if ann["area"] == 0:
-            images.pop(idx)
-            annotations.pop(idx)
 
     for idx, ann in enumerate(annotations):
         ann["id"] = idx
@@ -67,7 +63,7 @@ def split_data_and_copy_image(args):
         os.path.join(args.input_dir, "coco_annotations_processed.json")
     )
     coco_annotation_dict = json.load(coco_annotation_file)
-    images, annotations, categories = remove_empty_annotations(coco_annotation_dict)
+    images, annotations, categories = idx_to_annotations(coco_annotation_dict)
 
     # Separate images into "good" and "bad" based on annotations
     good_images, bad_images = [], []
@@ -140,10 +136,12 @@ def split_data_and_copy_image(args):
         "annotations": val_annotations,
     }
 
-    with open(os.path.join(args.train_folder_path, "custom_train.json"), "w") as f:
-        json.dump(train_dict, f, indent=4)
-    with open(os.path.join(args.val_folder_path, "custom_val.json"), "w") as f:
-        json.dump(val_dict, f, indent=4)
+    # Writes ison file containing the Images, Categories, and Annotations for both training and validation splits 
+
+    #with open(os.path.join(args.train_folder_path, "custom_train.json"), "w") as f:
+        #json.dump(train_dict, f, indent=4)
+    #with open(os.path.join(args.val_folder_path, "custom_val.json"), "w") as f:
+        #json.dump(val_dict, f, indent=4)
 
     # Print the number of training and validation samples
     print(f"Number of training samples: {len(train_images)}")
