@@ -1,0 +1,58 @@
+
+Crop the images to their exact bounding boxes to best evaluate the insects 
+
+python data_processing/crop_images.py --input_dir dataset/failed_crop_subset --cropped_output_dir dataset/cropped_objects --uncropped_output_dir dataset/uncropped_objects
+
+
+Evaluate the cropped images, determine whetehr they are burry or not 
+
+python data_processing/blur_detection.py -i dataset/cropped_objects
+
+
+
+
+
+HOW TO DECIDE THE BLUR THRESHOLD?
+
+
+
+
+
+
+## Complete, processed coco annotations: 
+
+python data_processing/complete_coco_json.py --input_dir dataset/failed_crop_subset
+```
+
+## 3. To view visualizations of good/bad train images, loss, and accuracy scores:
+
+```
+python Visualizations/visualizations.py --goodTrain_folder_path ./dataset/data_splits/train/good --badTrain_folder_path ./dataset/data_splits/train/bad
+```
+
+
+## 2. Split data into train and validation sets:
+This step divides the dataset into training and validation sets, each categorized into 'good' and 'bad' images.
+
+```
+python data_processing/split_data.py --input_dir dataset/failed_crop_subset --dataset_name dataset/data_splits
+```
+
+python data_processing/split_data.py --input_dir dataset/failed_crop_subset --dataset_name dataset
+
+
+
+
+Crop
+
+python data_processing/crop_images.py --input_dir dataset/failed_crop_subset --cropped_output_dir dataset/cropped_objects --unbounded_output_dir dataset/bad_imgs/unbounded_objects
+
+
+
+
+BLUR
+
+python data_processing/blur_detection.py -i dataset/failed_crop_subset -m dataset/cropped_objects/image_mapping.json -t 80.0
+
+EDGE DETECTION:
+python data_processing/edge_detection.py --input_dir dataset/good_imgs/original_clear_images --output_dir dataset/bad_imgs --margin 1

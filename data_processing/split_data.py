@@ -2,30 +2,23 @@ import json
 import shutil
 import os
 import argparse
-
 from sklearn.model_selection import train_test_split
 
+def create_output_directories(output_dir, dataset_name):
+    train_folder_path = os.path.join(dataset_name, "train")
+    good_train_folder_path = os.path.join(train_folder_path, "good")
+    bad_train_folder_path = os.path.join(train_folder_path, "bad")
 
-def create_directories(args):
-    args.train_folder_path = os.path.join(args.dataset_name, "train")
-    args.val_folder_path = os.path.join(args.dataset_name, "val")
-    args.goodTrain_folder_path = os.path.join(args.train_folder_path, "good")
-    args.badTrain_folder_path = os.path.join(args.train_folder_path, "bad")
-    args.goodVal_folder_path = os.path.join(args.val_folder_path, "good")
-    args.badVal_folder_path = os.path.join(args.val_folder_path, "bad")
+    val_folder_path = os.path.join(dataset_name, "val")
+    good_val_folder_path = os.path.join(val_folder_path, "good")
+    bad_val_folder_path = os.path.join(val_folder_path, "bad")
 
-    # Remove existing directories
-    if os.path.exists(args.dataset_name):
-        shutil.rmtree(args.dataset_name)
+    os.makedirs(good_train_folder_path, exist_ok=True)
+    os.makedirs(bad_train_folder_path, exist_ok=True)
+    os.makedirs(good_val_folder_path, exist_ok=True)
+    os.makedirs(bad_val_folder_path, exist_ok=True)
 
-    os.makedirs(args.dataset_name, exist_ok=True)
-    os.makedirs(args.train_folder_path, exist_ok=True)
-    os.makedirs(args.val_folder_path, exist_ok=True)
-    os.makedirs(args.goodTrain_folder_path, exist_ok=True)
-    os.makedirs(args.badTrain_folder_path, exist_ok=True)
-    os.makedirs(args.goodVal_folder_path, exist_ok=True)
-    os.makedirs(args.badVal_folder_path, exist_ok=True)
-
+    return good_train_folder_path, bad_train_folder_path, good_val_folder_path, bad_val_folder_path
 
 def add_missing_information_to_coco_json(coco_annotation_dict):
     images = coco_annotation_dict["images"]
@@ -33,13 +26,12 @@ def add_missing_information_to_coco_json(coco_annotation_dict):
 
     # Adding missing information to the annotation data
     for i in images:
-        i["file_name"] = i["toras_path"][15:]
+        if "file_name" not in i:
+            i["file_name"] = i["coco_url"].split('/')[-1]
     for i in annotations:
         i["area"] = i["bbox"][2] * i["bbox"][3]
         i["iscrowd"] = 0
     return images, annotations
-
-
 
 def idx_to_annotations(coco_annotation_dict):
     images, annotations, categories = (
@@ -48,8 +40,6 @@ def idx_to_annotations(coco_annotation_dict):
         coco_annotation_dict["categories"],
     )
 
-    annotations = annotations[0 : len(images)]
-
     for idx, ann in enumerate(annotations):
         ann["id"] = idx
         ann["image_id"] = idx
@@ -57,69 +47,51 @@ def idx_to_annotations(coco_annotation_dict):
 
     return images, annotations, categories
 
-
-def split_data_and_copy_image(args):
-    coco_annotation_file = open(
-        os.path.join(args.input_dir, "coco_annotations_processed.json")
-    )
-    coco_annotation_dict = json.load(coco_annotation_file)
+def split_data(args):
+    # Load Coco annotations  
+    with open(os.path.join(args.input_dir, "coco_annotations_processed.json")) as coco_annotation_file:
+        coco_annotation_dict = json.load(coco_annotation_file)
+    
     images, annotations, categories = idx_to_annotations(coco_annotation_dict)
 
-    # Separate images into "good" and "bad" based on annotations
-    good_images, bad_images = [], []
-    good_annotations, bad_annotations = [], []
+    good_train_folder_path, bad_train_folder_path, good_val_folder_path, bad_val_folder_path = create_output_directories(args.input_dir, args.dataset_name)
 
-    for img in images:
-        curr_id = img["id"]
-        if any(ann["image_id"] == curr_id and ann["area"] > 0 for ann in annotations):
-            good_images.append(img)
-        else:
-            bad_images.append(img)
-
-    for ann in annotations:
-        if any(ann["image_id"] == img["id"] for img in good_images):
-            good_annotations.append(ann)
-        else:
-            bad_annotations.append(ann)
+    # Gather all image file names from good and bad directories
+    good_images = [f for f in os.listdir(os.path.join(args.dataset_name, "good_imgs")) if f.endswith('.jpg')]
+    bad_images = [f for f in os.listdir(os.path.join(args.dataset_name, "bad_imgs")) if f.endswith('.jpg')]
 
     # Split "good" and "bad" images into training and validation sets
-    good_train_ids, good_val_ids = train_test_split(
-        [img["id"] for img in good_images], test_size=0.2
-    )
-    bad_train_ids, bad_val_ids = train_test_split(
-        [img["id"] for img in bad_images], test_size=0.2
-    )
+    good_train_imgs, good_val_imgs = train_test_split(good_images, test_size=0.2)
+    bad_train_imgs, bad_val_imgs = train_test_split(bad_images, test_size=0.2)
 
     train_images, val_images = [], []
     train_annotations, val_annotations = [], []
 
     # Copy and split "good" images
     for img in good_images:
-        curr_id = img["id"]
-        src = os.path.join(args.input_dir, img["file_name"])
-        if curr_id in good_train_ids:
-            train_images.append(img)
-            dst = os.path.join(args.goodTrain_folder_path, img["file_name"])
+        src = os.path.join(args.dataset_name, "good_imgs", img)
+        if img in good_train_imgs:
+            dst = os.path.join(good_train_folder_path, img)
+            train_images.append({"file_name": img, "id": len(train_images)})
         else:
-            val_images.append(img)
-            dst = os.path.join(args.goodVal_folder_path, img["file_name"])
+            dst = os.path.join(good_val_folder_path, img)
+            val_images.append({"file_name": img, "id": len(val_images) + len(train_images)})
         shutil.copyfile(src, dst)
 
     # Copy and split "bad" images
     for img in bad_images:
-        curr_id = img["id"]
-        src = os.path.join(args.input_dir, img["file_name"])
-        if curr_id in bad_train_ids:
-            train_images.append(img)
-            dst = os.path.join(args.badTrain_folder_path, img["file_name"])
+        src = os.path.join(args.dataset_name, "bad_imgs", img)
+        if img in bad_train_imgs:
+            dst = os.path.join(bad_train_folder_path, img)
+            train_images.append({"file_name": img, "id": len(train_images)})
         else:
-            val_images.append(img)
-            dst = os.path.join(args.badVal_folder_path, img["file_name"])
+            dst = os.path.join(bad_val_folder_path, img)
+            val_images.append({"file_name": img, "id": len(val_images) + len(train_images)})
         shutil.copyfile(src, dst)
 
     # Split annotations into training and validation sets
     for ann in annotations:
-        if ann["image_id"] in good_train_ids or ann["image_id"] in bad_train_ids:
+        if ann["image_id"] in [img["id"] for img in train_images]:
             train_annotations.append(ann)
         else:
             val_annotations.append(ann)
@@ -136,29 +108,25 @@ def split_data_and_copy_image(args):
         "annotations": val_annotations,
     }
 
-    # Writes ison file containing the Images, Categories, and Annotations for both training and validation splits 
-
-    #with open(os.path.join(args.train_folder_path, "custom_train.json"), "w") as f:
-        #json.dump(train_dict, f, indent=4)
-    #with open(os.path.join(args.val_folder_path, "custom_val.json"), "w") as f:
-        #json.dump(val_dict, f, indent=4)
+    with open(os.path.join(good_train_folder_path, "custom_train.json"), "w") as f:
+        json.dump(train_dict, f, indent=4)
+    with open(os.path.join(good_val_folder_path, "custom_val.json"), "w") as f:
+        json.dump(val_dict, f, indent=4)
 
     # Print the number of training and validation samples
     print(f"Number of training samples: {len(train_images)}")
     print(f"Number of validation samples: {len(val_images)}")
 
     # Calculate and print the number of "good" and "bad" images in the training set
-    num_good_train = len(os.listdir(args.goodTrain_folder_path))
-    num_bad_train = len(os.listdir(args.badTrain_folder_path))
-    num_good_val = len(os.listdir(args.goodVal_folder_path))
-    num_bad_val = len(os.listdir(args.badVal_folder_path))
+    num_good_train = len(os.listdir(good_train_folder_path))
+    num_bad_train = len(os.listdir(bad_train_folder_path))
+    num_good_val = len(os.listdir(good_val_folder_path))
+    num_bad_val = len(os.listdir(bad_val_folder_path))
 
     print(f"Number of good images in train: {num_good_train}")
     print(f"Number of bad images in train: {num_bad_train}")
     print(f"Number of good images in validation: {num_good_val}")
     print(f"Number of bad images in validation: {num_bad_val}")
-
-
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -171,7 +139,8 @@ if __name__ == "__main__":
     parser.add_argument(
         "--dataset_name", type=str, required=True, help="Name of the dataset"
     )
+ 
+ 
     args = parser.parse_args()
 
-    create_directories(args)
-    split_data_and_copy_image(args)
+    split_data(args)
