@@ -43,16 +43,13 @@ python data_processing/split_data.py --input_dir dataset/failed_crop_subset --da
 
 
 
-Crop
-
+CROP:
 python data_processing/crop_images.py --input_dir dataset/failed_crop_subset --cropped_output_dir dataset/cropped_objects --unbounded_output_dir dataset/bad_imgs/unbounded_objects
 
 
+BLUR:
+python data_processing/blur_detection.py -i dataset/failed_crop_subset -m dataset/processed/cropped_objects/image_mapping.json -o dataset/processed -t 80.0
 
-
-BLUR
-
-python data_processing/blur_detection.py -i dataset/failed_crop_subset -m dataset/cropped_objects/image_mapping.json -t 80.0
 
 EDGE DETECTION:
 python data_processing/edge_detection.py --input_dir dataset/good_imgs/original_clear_images --output_dir dataset/bad_imgs --margin 1

@@ -7,8 +7,7 @@ import cv2
 """ 
 NOTE:
 The cropped images are evaluated for blurriness because we are interested in the clarity of the insects within the bounding boxes, 
-not the entire image. However, the original, uncropped images are stored in separate directories (clear or blurry) based on the clarity
-of the insects in the cropped images. This approach ensures that the model trains on and identifies whole, original images as clear or 
+not the entire image.This approach ensures that the model trains on and identifies whole, original images as clear or 
 blurry based on the clarity of the insects in the bounding boxes.
 """
 # Computes the variance of the Laplacian of the image to determine its blurriness.
@@ -21,19 +20,31 @@ def load_image_mapping(mapping_file):
         return json.load(f)
 
 # Creates directories for storing processed original images.
-def create_output_directories(base_dir):
-    bad_images_dir = os.path.join(base_dir, "bad_imgs")
-    good_images_dir = os.path.join(base_dir, "good_imgs")
-    original_blurry_dir = os.path.join(bad_images_dir, "original_blurry_images")
-    original_clear_dir = os.path.join(good_images_dir, "original_clear_images")
-    os.makedirs(original_blurry_dir, exist_ok=True)
-    os.makedirs(original_clear_dir, exist_ok=True)
+def create_output_directories(output_dir):
+
+    # create good and bad image directories 
+    bad_images_dir = os.path.join(output_dir, "bad_imgs")
+    good_images_dir = os.path.join(output_dir, "good_imgs")
+
+    # Places the blurry images in the bad and clear in good directories respectively
+    #original_blurry_dir = os.path.join(bad_images_dir, "original_blurry_images")
+    #original_clear_dir = os.path.join(good_images_dir, "original_clear_images")
+
+    #os.makedirs(original_blurry_dir, exist_ok=True)
+    #os.makedirs(original_clear_dir, exist_ok=True)
+    os.makedirs(good_images_dir, exist_ok=True)
     return bad_images_dir, good_images_dir
 
+def count_images(directory):
+    return len([name for name in os.listdir(directory) if os.path.isfile(os.path.join(directory, name))])
+
 # Processes images to classify them as blurry or clear based on Laplacian variance.
-def process_images(input_dir, image_mapping, threshold, annotations):
-    original_blurry_dir, original_clear_dir = create_output_directories(os.path.dirname(input_dir))
+def process_images(output_dir, image_mapping, threshold, annotations):
+    original_blurry_dir, original_clear_dir = create_output_directories(output_dir)
     original_clear_annotations = {"images": [], "annotations": []}
+
+    num_original_bad = len(os.listdir(original_blurry_dir))
+    #print(num_original_bad)
 
     for cropped_path, original_path in image_mapping.items():
         try:
@@ -61,7 +72,7 @@ def process_images(input_dir, image_mapping, threshold, annotations):
         except Exception as e:
             print(f"Error processing {cropped_path}: {e}")
 
-    num_original_blurry = len(os.listdir(original_blurry_dir))
+    num_original_blurry = len(os.listdir(original_blurry_dir)) - num_original_bad
     num_original_clear = len(os.listdir(original_clear_dir))
 
     # Save the annotations for clear images to a JSON file
@@ -79,7 +90,7 @@ def main(args):
     with open(os.path.join(args.input_dir, "coco_annotations_processed.json")) as f:
         annotations = json.load(f)
         
-    num_blurry, num_clear = process_images(args.input_dir, image_mapping, args.threshold, annotations)
+    num_blurry, num_clear = process_images(args.output_dir, image_mapping, args.threshold, annotations)
     print(f"Number of original blurry images: {num_blurry}")
     print(f"Number of original clear images: {num_clear}")
 
@@ -90,6 +101,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", "--input_dir", required=True, help="Path to input directory of cropped images")
     parser.add_argument("-m", "--mapping_file", required=True, help="Path to JSON mapping file of cropped to original images")
+    parser.add_argument("-o", "--output_dir", required=True, help="Path to output directory of clear and blurry images")
     parser.add_argument("-t", "--threshold", type=float, default=130.0, help="Focus measures that fall below this value will be considered 'blurry'")
     args = parser.parse_args()
 

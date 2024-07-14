@@ -80,10 +80,13 @@ def process_image(args):
     
     # Save the image mappings into a json file 
     save_image_mapping(args.cropped_output_dir, image_mapping)
+
+    num_unbounded = len(os.listdir(args.unbounded_output_dir))
+    num_cropped = len(os.listdir(args.cropped_output_dir))
+
     
-    print(f"Cropped images saved in {args.cropped_output_dir}")
-    print(f"Unbounded images saved in {args.unbounded_output_dir}")
-    print(f"Image mapping saved as image_mapping.json")
+    print(num_cropped, f"Cropped images saved in {args.cropped_output_dir}")
+    print(num_unbounded, f"Unbounded images saved in {args.unbounded_output_dir}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
