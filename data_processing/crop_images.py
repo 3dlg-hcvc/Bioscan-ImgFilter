@@ -3,12 +3,7 @@ import json
 import shutil
 from PIL import Image
 import argparse
-
-
-# Load all image annotations
-def load_annotations(input_dir):
-    with open(os.path.join(input_dir, "coco_annotations_processed.json")) as f:
-        return json.load(f)
+from processing_helperFunctions import load_annotations, save_annotations
 
 
 # Create directories to store cropped and unbounded images
@@ -61,17 +56,11 @@ def crop_image(
         )
 
 
-# Save the cropped to original path mappings in a json file
-def save_image_mapping(cropped_output_dir, image_mapping):
-    with open(os.path.join(cropped_output_dir, "image_mapping.json"), "w") as f:
-        json.dump(image_mapping, f, indent=4)
-
-
 # Crop the image, store image in respective directories, create image mapping json file
 def process_image(args):
 
     # Load the image annotations
-    coco_annotation_dict = load_annotations(args.input_dir)
+    coco_annotation_dict = load_annotations(args.input_dir, "coco_annotations_processed.json")
     images, annotations = (
         coco_annotation_dict["images"],
         coco_annotation_dict["annotations"],
@@ -98,7 +87,7 @@ def process_image(args):
         )
 
     # Save the image mappings into a json file
-    save_image_mapping(args.cropped_output_dir, image_mapping)
+    save_annotations(image_mapping, args.cropped_output_dir, "image_mapping.json")
 
     num_unbounded = len(os.listdir(args.unbounded_output_dir))
     num_cropped = len(os.listdir(args.cropped_output_dir))

@@ -28,11 +28,15 @@ def eval_single_sample(val_data, model, device):
         sample = torch.unsqueeze(val_data[idx][0], dim=0).to(device)
 
         prediction = torch.sigmoid(model(sample))
+        prediction_value = prediction.item()*100
 
         if prediction < 0.5:
             print("Prediction: Bad Image")
+            print(f"Percent Bad: {prediction_value:.2f}%")
+
         else:
             print("Prediction: Good Image")
+            print(f"Percent good: {prediction_value:.2f}%")
 
         # Transform tensor to PIL image
         transform = T.ToPILImage()

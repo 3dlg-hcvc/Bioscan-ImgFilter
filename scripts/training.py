@@ -4,6 +4,8 @@ import sys
 import os
 import wandb
 from tqdm import tqdm
+from torch.optim.lr_scheduler import StepLR, ReduceLROnPlateau
+
 from training_helperFunctions import (
     initialize_model,
     get_loss_fn,
@@ -17,11 +19,16 @@ sys.path.append(
 from dataloaders import get_data_loaders, get_datasets
 
 
-def train_model(train_loader, val_loader, n_epochs=10):
+def train_model(train_loader, val_loader, n_epochs=20):
     # Initialize the model,loss, optimizer,and training step function
     model, device = initialize_model()
     loss_fn = get_loss_fn()
-    optimizer = torch.optim.Adam(model.fc.parameters(), lr=0.001)
+    #optimizer = torch.optim.Adam(model.fc.parameters(), lr=0.005)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=0.001, weight_decay=1e-6)
+    scheduler = ReduceLROnPlateau(optimizer, 'min', patience=2, factor=0.1)
+
+
+    #scheduler = StepLR(optimizer, step_size=3, gamma=0.1)
 
     epoch_train_loss = []
     epoch_val_loss = []
@@ -32,25 +39,24 @@ def train_model(train_loader, val_loader, n_epochs=10):
     best_model_wts = model.state_dict()
     best_loss = float("inf")
 
+
+    wandb.init(
+    # set the wandb project where this run will be logged
+    project="Bioscan-ImgFilter",
+
+    # track hyperparameters and run metadata
+    config={
+    "learning_rate": 0.001,
+    "epochs": 25,
+    }
+)
+
     # Loop through each epoch
     for epoch in range(n_epochs):
         epoch_loss = 0
         correct_predictions = 0
         all_train_targets = []
         all_train_predictions = []
-
-        # Set the model to training mode
-        model.train()
-
-        # Initialize wandb
-        wandb.init(
-            project="Filtering Images",
-            config={
-                "learning_rate": 0.001,
-                "epochs": n_epochs,
-                "batch_size": train_loader.batch_size,
-            },
-        )
 
         # Iterate through the training dataset
         for i, data in tqdm(enumerate(train_loader), total=len(train_loader)):
@@ -130,24 +136,33 @@ def train_model(train_loader, val_loader, n_epochs=10):
             wandb.log(
                 {
                     "epoch": epoch + 1,
+
+                    "train_loss": epoch_loss,
+                    "train_accuracy": train_accuracy,
+                    "train_f1_score": train_f1_score,
+
                     "val_loss": total_val_loss,
                     "val_accuracy": val_accuracy,
                     "val_f1_score": val_f1_score,
                 }
             )
 
+        
+
             best_loss = min(epoch_val_loss)
 
             # Update best model weights if validation loss improves
             if total_val_loss < best_loss:
                 best_model_wts = model.state_dict()
+        
+        scheduler.step(total_val_loss)
 
     # Load the best model weights
     model.load_state_dict(best_model_wts)
     # print(epoch_val_acc,epoch_train_acc)
 
     # Finish the wandb run
-    wandb.finish()
+    #wandb.finish()
     return model, epoch_train_loss, epoch_val_loss, epoch_train_acc, epoch_val_acc
 
 
@@ -166,7 +181,7 @@ def main():
     train_loader, val_loader = get_data_loaders(train_data, val_data, batch_size)
 
     # Train the model and get the loss history
-    trained_model, train_loss, val_loss, train_acc, val_acc = train_model(
+    train_model(
         train_loader, val_loader
     )
 

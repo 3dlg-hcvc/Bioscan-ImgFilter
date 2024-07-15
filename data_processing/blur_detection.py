@@ -3,6 +3,7 @@ import json
 import shutil
 import argparse
 import cv2
+from processing_helperFunctions import load_annotations,save_annotations
 
 """
 NOTE:
@@ -17,12 +18,6 @@ of the insects in the bounding boxes.
 # Computes Laplacian variance to measure image blurriness
 def variance_of_laplacian(image):
     return cv2.Laplacian(image, cv2.CV_64F).var()
-
-
-# Loads the JSON file that maps cropped images to their original images.
-def load_image_mapping(mapping_file):
-    with open(mapping_file) as f:
-        return json.load(f)
 
 
 # Creates directories for storing processed original images.
@@ -42,7 +37,6 @@ def process_images(output_dir, image_mapping, threshold, annotations):
     original_clear_annotations = {"images": [], "annotations": []}
 
     num_original_bad = len(os.listdir(original_blurry_dir))
-    # print(num_original_bad)
 
     for cropped_path, original_path in image_mapping.items():
         try:
@@ -81,26 +75,23 @@ def process_images(output_dir, image_mapping, threshold, annotations):
         except Exception as e:
             print(f"Error processing {cropped_path}: {e}")
 
-    num_original_blurry = len(os.listdir(original_blurry_dir)) - num_original_bad
-    num_original_clear = len(os.listdir(original_clear_dir))
+    num_blurry = len(os.listdir(original_blurry_dir)) - num_original_bad
+    num_clear = len(os.listdir(original_clear_dir))
 
     # Save the annotations for clear images to a JSON file
-    original_clear_annotations_file = os.path.join(
-        original_clear_dir, "original_clear_annotations.json"
-    )
-    with open(original_clear_annotations_file, "w") as f:
-        json.dump(original_clear_annotations, f, indent=4)
+    save_annotations(original_clear_annotations, original_clear_dir, "original_clear_annotations.json")
 
-    return num_original_blurry, num_original_clear
+    return num_blurry, num_clear
 
 
-# load the image mapping file, process images as clear or blurry
+# load the image mapping file, annotations, and process images as clear or blurry
 def main(args):
-    image_mapping = load_image_mapping(args.mapping_file)
+
+    # LOad the image mapping 
+    image_mapping = load_annotations(args.mapping_dir, "image_mapping.json")
 
     # Load the annotations
-    with open(os.path.join(args.input_dir, "coco_annotations_processed.json")) as f:
-        annotations = json.load(f)
+    annotations = load_annotations(args.input_dir, "coco_annotations_processed.json")
 
     num_blurry, num_clear = process_images(
         args.output_dir, image_mapping, args.threshold, annotations
@@ -121,7 +112,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "-m",
-        "--mapping_file",
+        "--mapping_dir",
         required=True,
         help="Path to JSON mapping file of cropped to original images",
     )

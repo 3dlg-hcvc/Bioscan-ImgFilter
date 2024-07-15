@@ -5,7 +5,10 @@ from torchvision import datasets, transforms
 def get_datasets(train_dir, val_dir):
     # Define the transformations
     train_transforms = transforms.Compose(
-        [
+        [   
+            # augment the training data
+            transforms.RandomHorizontalFlip(),
+            transforms.RandomRotation(30),
             transforms.Resize((224, 224)),
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),

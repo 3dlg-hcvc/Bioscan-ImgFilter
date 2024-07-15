@@ -3,6 +3,7 @@ import json
 import shutil
 import cv2
 import argparse
+from processing_helperFunctions import load_annotations, save_annotations
 
 
 # Detects edges in an image using Canny edge detection.
@@ -44,31 +45,17 @@ def is_small_object(bbox, max_width=150, max_height=150):
     return width < max_width and height < max_height
 
 
-# Save updated annotations back to JSON file.
-def save_annotations(annotations, output_file):
-    with open(output_file, "w") as f:
-        json.dump(annotations, f, indent=4)
-
-
-# Load the "clear" annotations from the JSON file.
-def load_annotations(input_dir):
-    with open(
-        os.path.join(input_dir, "original_clear_annotations.json")
-    ) as f:  # loads clear annotations
-        return json.load(f)
-
-
 # Create directories for storing fragmented images.
 def create_output_directories(output_dir):
     bad_images_dir = os.path.join(output_dir, "bad_imgs")
-
+    os.makedirs(bad_images_dir, exist_ok=True)
     return bad_images_dir
 
 
 # Process images to isolate those with bounding boxes too close to the edges.
 def process_images(input_dir, output_dir, annotations, margin):
     fragmented_dir = create_output_directories(os.path.dirname(output_dir))
-    too_close_annotations = {"images": [], "annotations": []}
+    fragmented_annotations = {"images": [], "annotations": []}
 
     original_clear_annotations = annotations
 
@@ -100,13 +87,12 @@ def process_images(input_dir, output_dir, annotations, margin):
             if too_close_to_edge(ann["bbox"], image_shape, margin) and is_small_object(
                 ann["bbox"]
             ):
-                too_close_annotations["images"].append(
+                fragmented_annotations["images"].append(
                     {"id": img["id"], "file_name": img["file_name"]}
                 )
-                too_close_annotations["annotations"].append(ann)
+                fragmented_annotations["annotations"].append(ann)
 
                 # moves fragmented images out of the clear directory
-                # print("iss fragment")
                 shutil.move(image_path, os.path.join(fragmented_dir, img["file_name"]))
 
                 # Remove the annotation from original clear annotations
@@ -122,18 +108,10 @@ def process_images(input_dir, output_dir, annotations, margin):
                 ]
 
                 break
-    # crates a json file containing annotations for images too close to the edge
-    too_close_annotations_file = os.path.join(
-        (fragmented_dir), "fragmented_annotations.json"
-    )
-    with open(too_close_annotations_file, "w") as f:
-        json.dump(too_close_annotations, f, indent=4)
 
-    # Save the modified original clear annotations back to file in original_clear_images directory
-    original_clear_annotations_file = os.path.join(
-        input_dir, "original_clear_annotations.json"
-    )
-    save_annotations(original_clear_annotations, original_clear_annotations_file)
+    # Save the modified original clear and fragmented annotations
+    save_annotations(fragmented_annotations, fragmented_dir, "fragmented_annotations.json")
+    save_annotations(original_clear_annotations, input_dir,  "original_clear_annotations.json")
 
     num_new_clear_images = len(os.listdir(input_dir))
 
@@ -143,7 +121,7 @@ def process_images(input_dir, output_dir, annotations, margin):
 
 def main(args):
 
-    annotations = load_annotations(args.input_dir)
+    annotations = load_annotations(args.input_dir, "original_clear_annotations.json")
     num_original_clear_images, num_new_clear_images = process_images(
         args.input_dir, args.output_dir, annotations, args.margin
     )
