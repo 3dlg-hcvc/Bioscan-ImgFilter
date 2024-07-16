@@ -2,13 +2,31 @@
 
 #
 # BIOSCAN - IMAGE FILTER
-A specialized image filtering tool that categorizes images into 'good' and 'bad,' reducing the need for manual labeling while enhancing overall robustness.
+A specialized image filtering tool that categorizes images into 'good' and 'bad' based on insect visibility, reducing the need for manual labeling while enhancing overall robustness.
+
 
 # Overview 
 ![Overview](./images/overview.png)
 
-The image filtering tool uses the pre-trained ResNet-18 CNN to classify images based on the presence of a valid bounding box. It automates the image annotation process, saving time and ensuring consistent, standardized classification, thereby reducing the need for manual dataset labeling. This is particularly advantageous for large-scale image datasets, improving efficiency and accuracy in data preparation. By filtering out images without valid bounding boxes, it maintains dataset integrity, crucial for training reliable machine learning models. ResNet-18’s robustness ensures precise and reliable classification, making it valuable across various machine learning workflows.
+The image filtering tool uses the pre-trained ResNet-18 CNN to classify images as "good" or "bad" by evaluating each image's bounding box, resolution, and fragmentation parameters. It automates the image annotation process, saving time and ensuring consistent, standardized classification, thereby reducing the need for manual dataset labeling. This is particularly advantageous for large-scale image datasets, improving efficiency and accuracy in data preparation. By filtering out images with invalid parameters, it maintains dataset integrity, crucial for training reliable machine learning models. ResNet-18’s robustness ensures precise and reliable classification, making it valuable across various machine learning workflows.
 <br><br>
+
+# Good vs Bad image distinction
+
+**Good** images are classified as having **all** of the following characteristics:
+- Bounded object (image with a valid bounding box)
+- Clear resolution 
+- Whole/not fragmented
+
+![Good Images](./images/good_imgs.png)
+
+**Bad** images are classifed as having **any** of the following characteristics:
+- Unbounded objects (image without a bounded object) 
+- Blurry resolution
+- Fragmented (ie: majority of the image is cut off, only a wing/leg depicted, etc)
+
+![Bad Images](./images/bad_imgs.png)
+
 
 # The Model
 
@@ -18,10 +36,6 @@ The ResNet-18 CNN, pretrained on the ImageNet dataset was used for binary classi
 The model reports increasingly high accuracy and F1 scores complemented by respectively low losses for both the training and validation splits, indicating effective learning and reliable real-world performance.  
 
 ![Performance](./images/performance.png)
-
-The table outlines the ResNet-18 model's strong performance metrics for both training and validation splits. As expected, the training split achieves slightly higher accuracy and F1 scores, while the validation split shows a marginally higher loss. These consistently high metrics demonstrate the model's reliability. 
-
-<img src="./images/performance_table.png" alt="Overview" width="800" height="100"><br>
 
 <br>
 
@@ -54,7 +68,7 @@ The dataset has been annotated to include bounding boxes identifying objects. Ev
 ## 1. Setup Environment 
 ### Download [Anaconda](https://www.anaconda.com/download) onto your computer 
 ```shell
-conda create — n Bioscan-ImgFilter python=3.10
+conda create -n Bioscan-ImgFilter python=3.10
 conda activate Bioscan-ImgFilter
 pip install -r requirements.txt 
 ```

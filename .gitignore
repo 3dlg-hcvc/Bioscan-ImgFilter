@@ -3,4 +3,5 @@ scripts/__pycache__/
 scripts/__init__
 data_processing/__pycache__/
 .vscode 
+extracommands.txt
 wandb/

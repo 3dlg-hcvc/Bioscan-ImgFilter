@@ -2,6 +2,7 @@ import torch
 import torchvision.transforms as T
 import os
 import sys
+
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), "../data_processing"))
 )
@@ -18,6 +19,7 @@ model, device = initialize_model()
 # Get datasets
 train_data, val_data = get_datasets(train_dir, val_dir)
 
+
 # Evaluate a single sample from the validation data
 def eval_single_sample(val_data, model, device):
     model.eval()  # Set the model to evaluation mode
@@ -28,7 +30,7 @@ def eval_single_sample(val_data, model, device):
         sample = torch.unsqueeze(val_data[idx][0], dim=0).to(device)
 
         prediction = torch.sigmoid(model(sample))
-        prediction_value = prediction.item()*100
+        prediction_value = prediction.item() * 100
 
         if prediction < 0.5:
             print("Prediction: Bad Image")
