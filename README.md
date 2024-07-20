@@ -41,10 +41,33 @@ The model reports increasingly high accuracy and F1 scores complemented by respe
 
 # The Dataset
 
+
 ## Subset of the dataset
 ![Sample Dataset](./images/sample_dataset.png)
 
-The filtering tool utilizes the "failed crop dataset" subset from Bioscan-1M, focusing on images that failed initial cropping attempts. This allows us to tackle the most challenging instances where our current image processing pipeline may struggle, whether due to genuine quality issues or processing failures. Some images are clear and well-defined, with easily identifiable bounding boxes, while others may be poor quality/blurry. Integrating this dataset aims to improve the overall performance and accuracy of our image processing system, ensuring robustness across diverse image types and conditions. 
+The filtering tool utilizes the "failed crop dataset" subset from Bioscan-1M, focusing on images that failed initial cropping attempts. This allows us to tackle the most challenging instances where our current image processing pipeline may struggle, whether due to genuine quality issues or processing failures. Some images may be easily identifiable while others may be poor quality. Integrating this dataset aims to improve the overall performance and accuracy of our image processing system, ensuring robustness across diverse image types and conditions. 
+
+## Data Preprocessing Pipeline
+![Sample Dataset](./images/data_preprocessing.png)
+
+The dataset initially consisted of mixed "good" and "bad" images. The images were processed through the following steps:
+
+**1) Cropping - bounding box detection:**
+
+- No Bounding Box: Classified as "bad" (no insects).
+- Bounding Box Present: Cropped to the bounding box to focus on the insect.
+
+**2) Resolution Evaluation:**
+
+- Blurry Images: Classified as "bad".
+- Clear Images: Proceeded to the next step.
+
+**3) Fragmentation Check:**
+
+- Fragmented/Cut-off Insects: Classified as "bad".
+- Whole/Mostly Visible Insects: Classified as "good".
+
+Finally, all "bad" images are stored in the bad_images directory, while images that passed all checks are stored in the good_images directory.
 
 ### i) Dataset Consists Of:
 - Diverse set of 929 insect images
@@ -63,6 +86,7 @@ The filtering tool utilizes the "failed crop dataset" subset from Bioscan-1M, fo
 ### iii) Annotations 
 The dataset has been annotated to include bounding boxes identifying objects. Every image containing any object, regardless of its quality, size, or type, is annotated with a bounding box. Only completely empty dish images are not annotated with a bounding box. 
 <br><br>
+
 # Implement Tool
 
 ## 1. Setup Environment 
