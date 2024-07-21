@@ -5,6 +5,8 @@ import os
 import wandb
 from tqdm import tqdm
 from torch.optim.lr_scheduler import ReduceLROnPlateau
+import argparse
+
 
 from training_helperFunctions import (
     initialize_model,
@@ -19,7 +21,7 @@ sys.path.append(
 from dataloaders import get_data_loaders, get_datasets
 
 
-def train_model(train_loader, val_loader, n_epochs=20):
+def train_model(train_loader, val_loader, n_epochs=2, use_wandb=False):
     # Initialize the model,loss, optimizer,and training step function
     model, device = initialize_model()
     loss_fn = get_loss_fn()
@@ -34,16 +36,15 @@ def train_model(train_loader, val_loader, n_epochs=20):
     # Initialize variables for tracking the best model weights and loss
     best_model_wts = model.state_dict()
     best_loss = float("inf")
-
-    wandb.init(
-        # set the wandb project where this run will be logged
-        project="Bioscan-ImgFilter",
-        # track hyperparameters and run metadata
-        config={
-            "learning_rate": 0.001,
-            "epochs": 25,
-        },
-    )
+    
+    if use_wandb:
+        wandb.init(
+            # track hyperparameters and run metadata
+            config={
+                "learning_rate": 0.001,
+                "epochs": 20,
+            },
+        )
 
     # Loop through each epoch
     for epoch in range(n_epochs):
@@ -124,17 +125,18 @@ def train_model(train_loader, val_loader, n_epochs=20):
             epoch_val_loss.append(total_val_loss)
             epoch_val_acc.append(val_accuracy * 100)
 
-            wandb.log(
-                {
-                    "epoch": epoch + 1,
-                    "train_loss": epoch_loss,
-                    "train_accuracy": train_accuracy,
-                    "train_f1_score": train_f1_score,
-                    "val_loss": total_val_loss,
-                    "val_accuracy": val_accuracy,
-                    "val_f1_score": val_f1_score,
-                }
-            )
+            if use_wandb:
+                wandb.log(
+                    {
+                        "epoch": epoch + 1,
+                        "train_loss": epoch_loss,
+                        "train_accuracy": train_accuracy,
+                        "train_f1_score": train_f1_score,
+                        "val_loss": total_val_loss,
+                        "val_accuracy": val_accuracy,
+                        "val_f1_score": val_f1_score,
+                    }
+                )
 
             best_loss = min(epoch_val_loss)
 
@@ -146,14 +148,20 @@ def train_model(train_loader, val_loader, n_epochs=20):
 
     # Load the best model weights
     model.load_state_dict(best_model_wts)
-    # print(epoch_val_acc,epoch_train_acc)
 
     # Finish the wandb run
-    # wandb.finish()
+    if use_wandb:
+        wandb.finish()
     return model, epoch_train_loss, epoch_val_loss, epoch_train_acc, epoch_val_acc
 
 
 def main():
+
+    # Parse command-line arguments
+    parser = argparse.ArgumentParser(description="Train a model with optional wandb logging")
+    parser.add_argument("--use_wandb", type=bool, default=False, help="Enable wandb logging")
+    args = parser.parse_args()
+    
     # Define the directories containing the data
     train_dir = "./dataset/data_splits/train"
     val_dir = "./dataset/data_splits/val"
@@ -168,7 +176,7 @@ def main():
     train_loader, val_loader = get_data_loaders(train_data, val_data, batch_size)
 
     # Train the model and get the loss history
-    train_model(train_loader, val_loader)
+    train_model(train_loader, val_loader, use_wandb=args.use_wandb)
 
 
 if __name__ == "__main__":
