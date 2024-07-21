@@ -8,7 +8,7 @@ A specialized image filtering tool that categorizes images into 'good' and 'bad'
 # Overview 
 ![Overview](./images/overview.png)
 
-The image filtering tool uses the pre-trained ResNet-18 CNN to classify images as "good" or "bad" by evaluating each image's bounding box, resolution, and fragmentation parameters. It automates the image annotation process, saving time and ensuring consistent, standardized classification, thereby reducing the need for manual dataset labeling. This is particularly advantageous for large-scale image datasets, improving efficiency and accuracy in data preparation. By filtering out images with invalid parameters, it maintains dataset integrity, crucial for training reliable machine learning models. ResNet-18’s robustness ensures precise and reliable classification, making it valuable across various machine learning workflows.
+The image filtering tool leverages a pre-trained ResNet-18 CNN to automatically classify images as "good" or "bad" based on bounding box accuracy, resolution, and fragmentation. By automating the annotation process, it enhances efficiency and consistency in large-scale datasets, minimizing manual labeling. This ensures dataset integrity by filtering out invalid images, which is crucial for training high-quality machine learning models. ResNet-18’s proven robustness guarantees precise classification, making this tool indispensable for streamlined data preparation and reliable model performance.
 <br><br>
 
 
