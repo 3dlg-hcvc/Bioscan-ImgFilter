@@ -21,7 +21,7 @@ sys.path.append(
 from dataloaders import get_data_loaders, get_datasets
 
 
-def train_model(train_loader, val_loader, n_epochs=2, use_wandb=False):
+def train_model(train_loader, val_loader, n_epochs=20, use_wandb=False):
     # Initialize the model,loss, optimizer,and training step function
     model, device = initialize_model()
     loss_fn = get_loss_fn()
