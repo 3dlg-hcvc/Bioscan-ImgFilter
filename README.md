@@ -69,7 +69,7 @@ Finally, all "bad" images are stored in the bad_images directory, while images t
 The ResNet-18 CNN, pretrained on the ImageNet dataset was used for binary classification. ResNet-18 is less computationally intensive and faster to train compared to deeper versions, making it a suitable choice for binary classification tasks, which typically do not require extremely deep networks. 
 
 ## i) Performance 
-The model demonstrates robust performance, achieving high accuracy (approximately 95%) and F1 scores (approximately 90%) with correspondingly low losses for both the training and validation splits, indicating effective learning and reliable real-world performance.
+The model demonstrates robust performance, achieving high accuracy and F1 scores (approximately 90% each) with correspondingly low losses for both the training and validation splits, indicating effective learning and reliable real-world performance.
 
 ![Performance](./images/performance.png)
 
