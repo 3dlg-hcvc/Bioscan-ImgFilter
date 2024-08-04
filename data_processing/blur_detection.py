@@ -26,17 +26,21 @@ def create_output_directories(output_dir):
     # create good and bad image directories
     bad_images_dir = os.path.join(output_dir, "bad_imgs")
     good_images_dir = os.path.join(output_dir, "good_imgs")
+    blurry_images_dir = os.path.join(output_dir, "blurry_imgs")
+    clear_images_dir = os.path.join(output_dir, "clear_imgs")
 
-    os.makedirs(good_images_dir, exist_ok=True)
-    return bad_images_dir, good_images_dir
+    os.makedirs(blurry_images_dir, exist_ok=True)
+    os.makedirs(clear_images_dir, exist_ok=True)
+
+    return bad_images_dir, good_images_dir, blurry_images_dir, clear_images_dir
 
 
 # Processes and classifies images as blurry or clear based on variance.
 def process_images(output_dir, image_mapping, threshold, annotations):
-    original_blurry_dir, original_clear_dir = create_output_directories(output_dir)
+    bad_img_dir, good_img_dir, original_blurry_dir, original_clear_dir = create_output_directories(output_dir)
     original_clear_annotations = {"images": [], "annotations": []}
 
-    num_original_bad = len(os.listdir(original_blurry_dir))
+    num_original_bad = len(os.listdir(bad_img_dir))
 
     for cropped_path, original_path in image_mapping.items():
         try:
@@ -46,9 +50,13 @@ def process_images(output_dir, image_mapping, threshold, annotations):
             original_filename = os.path.basename(original_path)
 
             if focus_measure < threshold:
-                destination_dir = original_blurry_dir
+                destination_dir = bad_img_dir
+                sub_dir = original_blurry_dir
+
+
             else:
-                destination_dir = original_clear_dir
+                destination_dir = good_img_dir
+                sub_dir = original_clear_dir
 
                 # Find the corresponding image data in annotations
                 image_data = next(
@@ -70,18 +78,25 @@ def process_images(output_dir, image_mapping, threshold, annotations):
                     ]
                     original_clear_annotations["annotations"].extend(img_annotations)
 
-            shutil.copy(original_path, os.path.join(destination_dir, original_filename))
+            # Check if the image has already been copied
+            if not os.path.exists(os.path.join(destination_dir, original_filename)):
+                shutil.copy(original_path, os.path.join(destination_dir, original_filename))
+            if not os.path.exists(os.path.join(sub_dir, original_filename)):
+                shutil.copy(original_path, os.path.join(sub_dir, original_filename))
+
 
         except Exception as e:
             print(f"Error processing {cropped_path}: {e}")
 
-    num_blurry = len(os.listdir(original_blurry_dir)) - num_original_bad
-    num_clear = len(os.listdir(original_clear_dir))
-
     # Save the annotations for clear images to a JSON file
+    save_annotations(original_clear_annotations, good_img_dir, "original_clear_annotations.json")
     save_annotations(original_clear_annotations, original_clear_dir, "original_clear_annotations.json")
 
-    return num_blurry, num_clear
+    print(f"Number of blurry images:", len(os.listdir(original_blurry_dir)))
+    print(f"Number of clear images:", len(os.listdir(original_clear_dir)))
+
+    print(f"Number of bad images:", len(os.listdir(bad_img_dir)))
+    print(f"Number of good images:", len(os.listdir(good_img_dir)))
 
 
 # load the image mapping file, annotations, and process images as clear or blurry
@@ -93,11 +108,13 @@ def main(args):
     # Load the annotations
     annotations = load_annotations(args.input_dir, "coco_annotations_processed.json")
 
-    num_blurry, num_clear = process_images(
+    process_images(
         args.output_dir, image_mapping, args.threshold, annotations
     )
-    print(f"Number of original blurry images: {num_blurry}")
-    print(f"Number of original clear images: {num_clear}")
+  
+
+
+
 
 
 if __name__ == "__main__":
