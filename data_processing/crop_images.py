@@ -7,9 +7,12 @@ from processing_helperFunctions import load_annotations, save_annotations
 
 
 # Create directories to store cropped and unbounded images
-def create_directories(cropped_output_dir, unbounded_output_dir):
+def create_directories(cropped_output_dir, unbounded_output_dir, unbounded_labelled, bounded_labelled):
     os.makedirs(cropped_output_dir, exist_ok=True)
     os.makedirs(unbounded_output_dir, exist_ok=True)
+
+    os.makedirs(unbounded_labelled, exist_ok=True)
+    os.makedirs(bounded_labelled, exist_ok=True)
 
 
 # Creates directories for storing processed original images.

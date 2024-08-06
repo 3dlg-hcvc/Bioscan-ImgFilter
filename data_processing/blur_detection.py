@@ -4,6 +4,7 @@ import shutil
 import argparse
 import cv2
 from processing_helperFunctions import load_annotations,save_annotations
+import random
 
 """
 NOTE:
@@ -28,16 +29,27 @@ def create_output_directories(output_dir):
     good_images_dir = os.path.join(output_dir, "good_imgs")
     blurry_images_dir = os.path.join(output_dir, "blurry_imgs")
     clear_images_dir = os.path.join(output_dir, "clear_imgs")
+    cropped_blurry_images_dir = os.path.join(output_dir, "cropped_blurry_imgs")
+    cropped_clear_images_dir = os.path.join(output_dir, "cropped_clear_imgs")
 
     os.makedirs(blurry_images_dir, exist_ok=True)
     os.makedirs(clear_images_dir, exist_ok=True)
+    os.makedirs(cropped_blurry_images_dir, exist_ok=True)
+    os.makedirs(cropped_clear_images_dir, exist_ok=True)
 
-    return bad_images_dir, good_images_dir, blurry_images_dir, clear_images_dir
+    return bad_images_dir, good_images_dir, blurry_images_dir, clear_images_dir, cropped_blurry_images_dir, cropped_clear_images_dir
 
+# Randomly select a specified number of images to remain in a directory
+def randomly_select_images(directory, num_images_to_keep):
+    all_images = os.listdir(directory)
+    images_to_keep = random.sample(all_images, num_images_to_keep)
+    images_to_remove = set(all_images) - set(images_to_keep)
 
+    for image in images_to_remove:
+        os.remove(os.path.join(directory, image))
 # Processes and classifies images as blurry or clear based on variance.
 def process_images(output_dir, image_mapping, threshold, annotations):
-    bad_img_dir, good_img_dir, original_blurry_dir, original_clear_dir = create_output_directories(output_dir)
+    bad_img_dir, good_img_dir, original_blurry_dir, original_clear_dir, cropped_blurry_images_dir, cropped_clear_images_dir = create_output_directories(output_dir)
     original_clear_annotations = {"images": [], "annotations": []}
 
     num_original_bad = len(os.listdir(bad_img_dir))
@@ -52,11 +64,13 @@ def process_images(output_dir, image_mapping, threshold, annotations):
             if focus_measure < threshold:
                 destination_dir = bad_img_dir
                 sub_dir = original_blurry_dir
+                cropped_dir = cropped_blurry_images_dir
 
 
             else:
                 destination_dir = good_img_dir
                 sub_dir = original_clear_dir
+                cropped_dir = cropped_clear_images_dir
 
                 # Find the corresponding image data in annotations
                 image_data = next(
@@ -81,8 +95,12 @@ def process_images(output_dir, image_mapping, threshold, annotations):
             # Check if the image has already been copied
             if not os.path.exists(os.path.join(destination_dir, original_filename)):
                 shutil.copy(original_path, os.path.join(destination_dir, original_filename))
+
             if not os.path.exists(os.path.join(sub_dir, original_filename)):
                 shutil.copy(original_path, os.path.join(sub_dir, original_filename))
+            
+            if not os.path.exists(os.path.join(cropped_dir, original_filename)):
+                shutil.copy(cropped_path, os.path.join(cropped_dir, original_filename))
 
 
         except Exception as e:
@@ -98,6 +116,10 @@ def process_images(output_dir, image_mapping, threshold, annotations):
     print(f"Number of bad images:", len(os.listdir(bad_img_dir)))
     print(f"Number of good images:", len(os.listdir(good_img_dir)))
 
+    print(f"Number of cropped blurry images:", len(os.listdir(cropped_blurry_images_dir)))
+    print(f"Number of cropped clear images:", len(os.listdir(cropped_clear_images_dir)))
+
+
 
 # load the image mapping file, annotations, and process images as clear or blurry
 def main(args):
@@ -111,6 +133,11 @@ def main(args):
     process_images(
         args.output_dir, image_mapping, args.threshold, annotations
     )
+
+    # Randomly select 150 images to remain in the cropped clear images directory
+    randomly_select_images(os.path.join(args.output_dir, "cropped_clear_imgs"), 150)
+    print(f"Number of images in cropped clear images directory:", len(os.listdir(os.path.join(args.output_dir, "cropped_clear_imgs"))))
+
   
 
 

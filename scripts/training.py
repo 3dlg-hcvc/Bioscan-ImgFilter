@@ -1,4 +1,4 @@
-from sklearn.metrics import f1_score
+from sklearn.metrics import classification_report, confusion_matrix, f1_score, precision_score, recall_score, accuracy_score
 import torch
 import sys
 import os
@@ -21,7 +21,7 @@ sys.path.append(
 from dataloaders import get_data_loaders, get_datasets
 
 
-def train_model(train_loader, val_loader, n_epochs=20, use_wandb=False):
+def train_model(train_loader, val_loader, n_epochs=12, use_wandb=False):
     # Initialize the model,loss, optimizer,and training step function
     model, device = initialize_model()
     loss_fn = get_loss_fn()
@@ -41,8 +41,7 @@ def train_model(train_loader, val_loader, n_epochs=20, use_wandb=False):
         wandb.init(
             # track hyperparameters and run metadata
             config={
-                "learning_rate": 0.001,
-                "epochs": 20,
+                "learning_rate": 0.001
             },
         )
 
@@ -118,10 +117,20 @@ def train_model(train_loader, val_loader, n_epochs=20, use_wandb=False):
             # Accuracy, F1 Score, and los over the entire epoch
             val_accuracy = correct_predictions.item() / len(val_loader)
             val_f1_score = f1_score(all_val_targets, all_val_predictions)
+            accuracy = accuracy_score(all_val_targets, all_val_predictions)
+            precision = precision_score(all_val_targets, all_val_predictions)
+            recall = recall_score(all_val_targets, all_val_predictions)
+                # Compute confusion matrix
+            conf_matrix = confusion_matrix(all_val_targets, all_val_predictions)
+            class_report = classification_report(all_val_targets, all_val_predictions, target_names=['Bad', 'Good'])
 
             print(
-                f"Epoch: {epoch+1}, Val Loss: {total_val_loss:4f}, Val Accuracy: {val_accuracy*100:.4f}%, Val F1 Score: {val_f1_score:.4f}"
+                f"Epoch: {epoch+1}, Val Loss: {total_val_loss:.4f}, Val Accuracy: {accuracy*100:.4f}%, "
+                f"Val F1 Score: {val_f1_score:.4f}, Val Precision Score: {precision:.4f}, Val Recall Score: {recall:.4f}, "
+                f"\nConfusion matrix:\n",conf_matrix, 
+                f"\n",class_report
             )
+
             epoch_val_loss.append(total_val_loss)
             epoch_val_acc.append(val_accuracy * 100)
 
@@ -135,6 +144,8 @@ def train_model(train_loader, val_loader, n_epochs=20, use_wandb=False):
                         "val_loss": total_val_loss,
                         "val_accuracy": val_accuracy,
                         "val_f1_score": val_f1_score,
+                        "val_precision": precision,
+                        "val_recall": recall,
                     }
                 )
 

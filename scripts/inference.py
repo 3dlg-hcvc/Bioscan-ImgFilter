@@ -34,7 +34,7 @@ def eval_single_sample(val_data, model, device):
 
         if prediction < 0.5:
             print("Prediction: Bad Image")
-            print(f"Percent Bad: {prediction_value:.2f}%")
+            print(f"Percent good: {prediction_value:.2f}%")
 
         else:
             print("Prediction: Good Image")

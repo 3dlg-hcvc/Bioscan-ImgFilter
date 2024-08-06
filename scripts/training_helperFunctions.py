@@ -35,7 +35,7 @@ def initialize_model():
         param.requires_grad = False
 
     # Unfreeze last few layers
-    for param in model.layer4.parameters():
+    for param in model.layer3.parameters():
         param.requires_grad = True
 
     # for param in model.layer3.parameters():
@@ -44,7 +44,7 @@ def initialize_model():
     # Add a new final layer
     num_filters = model.fc.in_features
     # model.fc = nn.Linear(num_filters, 1)
-    model.fc = nn.Sequential(nn.Dropout(0.6), nn.Linear(num_filters, 1))
+    model.fc = nn.Sequential(nn.Dropout(0.4), nn.Linear(num_filters, 1))
 
     # Move model to device
     model = model.to(device)

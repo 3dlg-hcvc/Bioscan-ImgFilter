@@ -36,7 +36,7 @@ def too_close_to_edge(bbox, image_shape, margin=1):
 
 
 # Chceks image size
-def is_small_object(bbox, max_width=150, max_height=150):
+def is_small_object(bbox, max_width=100, max_height=100):
 
     # Extracts bounded object's width and height
     width, height = bbox[2:]
@@ -48,7 +48,8 @@ def is_small_object(bbox, max_width=150, max_height=150):
 # Create directories for storing fragmented images.
 def create_output_directories(output_dir):
     bad_images_dir = os.path.join(output_dir, "bad_imgs")
-    fragmentated_dir = os.path.join(output_dir, "fragmentated_imgs")
+
+    fragmentated_dir = os.path.join(output_dir, "fragmented_imgs")
 
     os.makedirs(fragmentated_dir, exist_ok=True)
     return bad_images_dir, fragmentated_dir
@@ -61,9 +62,6 @@ def process_images(input_dir, output_dir, annotations, margin):
     fragmented_annotations = {"images": [], "annotations": []}
 
     original_clear_annotations = annotations
-
-    # Accessing the length of original_clear_images directory
-    num_original_clear_images = len(os.listdir((input_dir)))
 
     # Loop through each image's annotations
     for img in annotations["images"]:
@@ -128,11 +126,9 @@ def process_images(input_dir, output_dir, annotations, margin):
 
 
     print(f"Total number of fragmented images:", len(os.listdir(fragmented_dir)))
-    print(f"Total number of good images:", (num_original_clear_images))
+    print(f"Total number of good images:", (num_new_clear_images))
     print(f"Total number of bad images after fragmented images added: {len(os.listdir(bad_imgs_dir))}")
 
-    # returns the number of fragmented images and the json file
-    return num_original_clear_images, num_new_clear_images
 
 
 def main(args):
