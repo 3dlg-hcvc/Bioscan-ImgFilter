@@ -47,6 +47,7 @@ def randomly_select_images(directory, num_images_to_keep):
 
     for image in images_to_remove:
         os.remove(os.path.join(directory, image))
+
 # Processes and classifies images as blurry or clear based on variance.
 def process_images(output_dir, image_mapping, threshold, annotations):
     bad_img_dir, good_img_dir, original_blurry_dir, original_clear_dir, cropped_blurry_images_dir, cropped_clear_images_dir = create_output_directories(output_dir)

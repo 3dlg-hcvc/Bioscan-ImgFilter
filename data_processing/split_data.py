@@ -17,21 +17,51 @@ def create_output_directories(output_dir):
     good_val_folder_path = os.path.join(val_folder_path, "good")
     bad_val_folder_path = os.path.join(val_folder_path, "bad")
 
+
+    # Create train, clear/blurry directories
+    train_blur_detection = os.path.join(output_dir, "train_blur_detection")
+    train_clear_path = os.path.join(train_blur_detection, "clear")
+    train_blurry_path = os.path.join(train_blur_detection, "blurry")
+
+
+    # Create validation, clear/blurry directories
+    val_blur_detection = os.path.join(output_dir, "val_blur_detection")
+    val_clear_path = os.path.join(val_blur_detection, "clear")
+    val_blurry_path = os.path.join(val_blur_detection, "blurry")
+    
+
+
     # Remove and reset directories if they previously existed
     if os.path.exists(train_folder_path) or os.path.exists(val_folder_path):
         shutil.rmtree(train_folder_path)
         shutil.rmtree(val_folder_path)
 
+    # Remove and reset directories if they previously existed
+    if os.path.exists(val_blur_detection) or os.path.exists(train_blur_detection):
+        shutil.rmtree(train_blur_detection)
+        shutil.rmtree(val_blur_detection)
+
+    
     os.makedirs(good_train_folder_path, exist_ok=True)
     os.makedirs(bad_train_folder_path, exist_ok=True)
     os.makedirs(good_val_folder_path, exist_ok=True)
     os.makedirs(bad_val_folder_path, exist_ok=True)
+
+    os.makedirs(train_clear_path, exist_ok=True)
+    os.makedirs(train_blurry_path, exist_ok=True)
+    os.makedirs(val_clear_path, exist_ok=True)
+    os.makedirs(val_blurry_path, exist_ok=True)
 
     return (
         good_train_folder_path,
         bad_train_folder_path,
         good_val_folder_path,
         bad_val_folder_path,
+
+        train_clear_path,
+        train_blurry_path,
+        val_clear_path,
+        val_blurry_path,
     )
 
 
@@ -81,6 +111,11 @@ def split_data(args):
         bad_train_folder_path,
         good_val_folder_path,
         bad_val_folder_path,
+
+        train_clear_path,
+        train_blurry_path,
+        val_clear_path,
+        val_blurry_path,
     ) = create_output_directories(args.output_dir)
 
     # Gather all image file names from good and bad directories
@@ -95,9 +130,25 @@ def split_data(args):
         if f.endswith(".jpg")
     ]
 
+    blurry_images = [
+        f
+        for f in os.listdir(os.path.join(args.dataset_name, "blurry_imgs"))
+        if f.endswith(".jpg")
+    ]
+
+
+    clear_images = [
+        f
+        for f in os.listdir(os.path.join(args.dataset_name, "clear_imgs"))
+        if f.endswith(".jpg")
+    ]
+
     # Split "good" and "bad" images into training and validation sets
     good_train_imgs, good_val_imgs = train_test_split(good_images, test_size=0.2)
     bad_train_imgs, bad_val_imgs = train_test_split(bad_images, test_size=0.2)
+
+    clear_train_imgs, good_val_imgs = train_test_split(clear_images, test_size=0.4)
+    blurry_train_imgs, bad_val_imgs = train_test_split(blurry_images, test_size=0.4)
 
     train_images, val_images = [], []
     train_annotations, val_annotations = [], []
@@ -128,6 +179,34 @@ def split_data(args):
             )
         shutil.copyfile(src, dst)
 
+
+     # Copy and split "blurry" images
+    for img in blurry_images:
+        src = os.path.join(args.dataset_name, "blurry_imgs", img)
+        if img in blurry_train_imgs:
+            dst = os.path.join(train_blurry_path, img)
+            train_images.append({"file_name": img, "id": len(train_images)})
+        else:
+            dst = os.path.join(val_blurry_path, img)
+            val_images.append(
+                {"file_name": img, "id": len(val_images) + len(train_images)}
+            )
+        shutil.copyfile(src, dst)
+
+
+        # Copy and split "clear" images
+    for img in clear_images:
+        src = os.path.join(args.dataset_name, "clear_imgs", img)
+        if img in clear_train_imgs:
+            dst = os.path.join(train_clear_path, img)
+            train_images.append({"file_name": img, "id": len(train_images)})
+        else:
+            dst = os.path.join(val_clear_path, img)
+            val_images.append(
+                {"file_name": img, "id": len(val_images) + len(train_images)}
+            )
+        shutil.copyfile(src, dst)
+
     # Split annotations into training and validation sets
     for ann in annotations:
         if ann["image_id"] in [img["id"] for img in train_images]:
@@ -152,9 +231,13 @@ def split_data(args):
     with open(os.path.join(good_val_folder_path, "custom_val.json"), "w") as f:
         json.dump(val_dict, f, indent=4)
 
+
     # Print the number of training and validation samples
-    print(f"Number of training samples: {len(train_images)}")
-    print(f"Number of validation samples: {len(val_images)}")
+    num_train = len(os.listdir(good_train_folder_path)) + len(os.listdir(bad_train_folder_path)) 
+    num_val = len(os.listdir(good_val_folder_path)) + len(os.listdir(bad_val_folder_path)) 
+
+    print(f"Number of training samples: {num_train}")
+    print(f"Number of validation samples: {(num_val)}")
 
     # Calculate and print the number of "good" and "bad" images in the training set
     num_good_train = len(os.listdir(good_train_folder_path))
@@ -166,6 +249,19 @@ def split_data(args):
     print(f"Number of bad images in train: {num_bad_train}")
     print(f"Number of good images in validation: {num_good_val}")
     print(f"Number of bad images in validation: {num_bad_val}")
+
+
+
+    # Calculate and print the number of "good" and "bad" images in the training set
+    num_clear_train = len(os.listdir(train_clear_path))
+    num_blurry_train = len(os.listdir(train_blurry_path))
+    num_clear_val = len(os.listdir(val_clear_path))
+    num_blurry_val = len(os.listdir(val_blurry_path))
+
+    print(f"Number of clear images in train: {num_clear_train}")
+    print(f"Number of blurry images in train: {num_blurry_train}")
+    print(f"Number of clear images in validation: {num_clear_val}")
+    print(f"Number of blurry images in validation: {num_blurry_val}")
 
 
 if __name__ == "__main__":
