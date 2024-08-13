@@ -21,7 +21,7 @@ sys.path.append(
 from dataloaders import get_data_loaders, get_datasets
 
 
-def train_model(train_loader, val_loader, n_epochs=12, use_wandb=False):
+def train_model(train_loader, val_loader, n_epochs=24, use_wandb=False):
     # Initialize the model,loss, optimizer,and training step function
     model, device = initialize_model()
     loss_fn = get_loss_fn()
@@ -75,7 +75,7 @@ def train_model(train_loader, val_loader, n_epochs=12, use_wandb=False):
             all_train_targets.extend(target_labels_batch.cpu().numpy())
             all_train_predictions.extend(predicted_labels.cpu().numpy())
 
-        train_accuracy = correct_predictions.item() / len(train_loader)
+        train_accuracy = accuracy_score(all_train_targets,all_train_predictions)
         train_f1_score = f1_score(all_train_targets, all_train_predictions)
 
         print(
@@ -115,17 +115,18 @@ def train_model(train_loader, val_loader, n_epochs=12, use_wandb=False):
                 all_val_predictions.extend(predicted_labels.cpu().numpy())
 
             # Accuracy, F1 Score, and los over the entire epoch
-            val_accuracy = correct_predictions.item() / len(val_loader)
+            #val_accuracy = correct_predictions.item() / len(val_loader)
             val_f1_score = f1_score(all_val_targets, all_val_predictions)
-            accuracy = accuracy_score(all_val_targets, all_val_predictions)
+            val_accuracy = accuracy_score(all_val_targets, all_val_predictions)
             precision = precision_score(all_val_targets, all_val_predictions)
             recall = recall_score(all_val_targets, all_val_predictions)
                 # Compute confusion matrix
+
             conf_matrix = confusion_matrix(all_val_targets, all_val_predictions)
-            class_report = classification_report(all_val_targets, all_val_predictions, target_names=['Bad', 'Good'])
+            class_report = classification_report(all_val_targets, all_val_predictions, target_names=['Blurry', 'Clear'])
 
             print(
-                f"Epoch: {epoch+1}, Val Loss: {total_val_loss:.4f}, Val Accuracy: {accuracy*100:.4f}%, "
+                f"Epoch: {epoch+1}, Val Loss: {total_val_loss:.4f}, Val Accuracy: {val_accuracy*100:.4f}%, "
                 f"Val F1 Score: {val_f1_score:.4f}, Val Precision Score: {precision:.4f}, Val Recall Score: {recall:.4f}, "
                 f"\nConfusion matrix:\n",conf_matrix, 
                 f"\n",class_report
@@ -174,8 +175,8 @@ def main():
     args = parser.parse_args()
     
     # Define the directories containing the data
-    train_dir = "./dataset/data_splits/train"
-    val_dir = "./dataset/data_splits/val"
+    train_dir = "./dataset/data_splits/train_blur_detection"
+    val_dir = "./dataset/data_splits/val_blur_detection"
 
     # Call the function to get the datasets
     train_data, val_data = get_datasets(train_dir, val_dir)
