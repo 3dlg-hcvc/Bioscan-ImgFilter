@@ -9,136 +9,130 @@ from sklearn.model_selection import train_test_split
 
 from processing_helperFunctions import load_annotations, save_annotations
 
-# Function to compute Laplacian variance
-def variance_of_laplacian(image):
-    return cv2.Laplacian(image, cv2.CV_64F).var()
-
-# Function to load images and their labels
-def load_images_and_labels(clear_dir, blurry_dir):
-    images = []
-    labels = []
+# # Function to load images and their labels
+# def load_images_and_labels(clear_dir, blurry_dir):
+#     images = []
+#     labels = []
     
-    # Load clear images
-    for filename in os.listdir(clear_dir):
-        if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-            img_path = os.path.join(clear_dir, filename)
-            images.append(img_path)
-            labels.append(1)  # Label 1 for clear images
+#     # Load clear images
+#     for filename in os.listdir(clear_dir):
+#         if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
+#             img_path = os.path.join(clear_dir, filename)
+#             images.append(img_path)
+#             labels.append(1)  # Label 1 for clear images
 
-    # Load blurry images
-    for filename in os.listdir(blurry_dir):
-        if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-            img_path = os.path.join(blurry_dir, filename)
-            images.append(img_path)
-            labels.append(0)  # Label 0 for blurry images
+#     # Load blurry images
+#     for filename in os.listdir(blurry_dir):
+#         if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
+#             img_path = os.path.join(blurry_dir, filename)
+#             images.append(img_path)
+#             labels.append(0)  # Label 0 for blurry images
 
-    return images, labels
+#     return images, labels
 
-# Evaluate the Laplacian variance method
-def evaluate_laplacian_method(clear_dir, blurry_dir, threshold):
-    image_paths, true_labels = load_images_and_labels(clear_dir, blurry_dir)
+# # Evaluate the Laplacian variance method
+# def evaluate_laplacian_method(clear_dir, blurry_dir, threshold):
+#     image_paths, true_labels = load_images_and_labels(clear_dir, blurry_dir)
     
-    # Split data into train and test sets
-    train_paths, test_paths, train_labels, test_labels = train_test_split(image_paths, true_labels, test_size=0.4, random_state=42)
+#     # Split data into train and test sets
+#     train_paths, test_paths, train_labels, test_labels = train_test_split(image_paths, true_labels, test_size=0.4, random_state=42)
     
-    # Compute Laplacian variance and classify
-    pred_labels = []
-    for img_path in test_paths:
-        image = cv2.imread(img_path)
-        if image is not None:
-            gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            focus_measure = variance_of_laplacian(gray)
-            pred_labels.append(1 if focus_measure >= threshold else 0)
+#     # Compute Laplacian variance and classify
+#     pred_labels = []
+#     for img_path in test_paths:
+#         image = cv2.imread(img_path)
+#         if image is not None:
+#             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+#             focus_measure = variance_of_laplacian(gray)
+#             pred_labels.append(1 if focus_measure >= threshold else 0)
     
-    # Compute performance metrics
-    accuracy = accuracy_score(test_labels, pred_labels)
-    precision = precision_score(test_labels, pred_labels)
-    recall = recall_score(test_labels, pred_labels)
-    f1 = f1_score(test_labels, pred_labels)
+#     # Compute performance metrics
+#     accuracy = accuracy_score(test_labels, pred_labels)
+#     precision = precision_score(test_labels, pred_labels)
+#     recall = recall_score(test_labels, pred_labels)
+#     f1 = f1_score(test_labels, pred_labels)
 
-    # Compute confusion matrix
-    conf_matrix = confusion_matrix(test_labels, pred_labels)
-    class_report = classification_report(test_labels, pred_labels, target_names=['Blurry', 'Clear'])
+#     # Compute confusion matrix
+#     conf_matrix = confusion_matrix(test_labels, pred_labels)
+#     class_report = classification_report(test_labels, pred_labels, target_names=['Blurry', 'Clear'])
 
-    # Print results
-    print("Accuracy:", accuracy)
-    print("Precision:", precision)
-    print("Recall:", recall)
-    print("F1 Score:", f1)
-    print("\nConfusion Matrix:")
-    print(conf_matrix)
-    print("\nClassification Report:")
-    print(class_report)
+#     # Print results
+#     print("Accuracy:", accuracy)
+#     print("Precision:", precision)
+#     print("Recall:", recall)
+#     print("F1 Score:", f1)
+#     print("\nConfusion Matrix:")
+#     print(conf_matrix)
+#     print("\nClassification Report:")
+#     print(class_report)
 
-if __name__ == "__main__":
-    # Define the directories containing images
-    clear_images_dir = 'dataset/cropped_clear_imgs'
-    blurry_images_dir = 'dataset/cropped_blurry_imgs'
+# if __name__ == "__main__":
+#     # Define the directories containing images
+#     clear_images_dir = 'dataset/cropped_clear_imgs'
+#     blurry_images_dir = 'dataset/cropped_blurry_imgs'
 
-    # Define the threshold for classification
-    threshold = 60.0
+#     # Define the threshold for classification
+#     threshold = 60.0
 
-    # Evaluate the Laplacian variance method
-    evaluate_laplacian_method(clear_images_dir, blurry_images_dir, threshold)
+#     # Evaluate the Laplacian variance method
+#     evaluate_laplacian_method(clear_images_dir, blurry_images_dir, threshold)
 
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------
 
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import classification_report, confusion_matrix
 
-def evaluate_random_forest_model(clear_dir, blurry_dir):
-    image_paths, labels = load_images_and_labels(clear_dir, blurry_dir)
-    train_paths, test_paths, train_labels, test_labels = train_test_split(image_paths, labels, test_size=0.4, random_state=42)
+# def evaluate_random_forest_model(clear_dir, blurry_dir):
+#     image_paths, labels = load_images_and_labels(clear_dir, blurry_dir)
+#     train_paths, test_paths, train_labels, test_labels = train_test_split(image_paths, labels, test_size=0.4, random_state=42)
     
-    train_features = extract_features(train_paths)
-    test_features = extract_features(test_paths)
+#     train_features = extract_features(train_paths)
+#     test_features = extract_features(test_paths)
     
-    # Create and train a Random Forest classifier
-    rf = RandomForestClassifier(n_estimators=50,random_state=42)
-    rf.fit(train_features, train_labels)
+#     # Create and train a Random Forest classifier
+#     rf = RandomForestClassifier(n_estimators=50,random_state=42)
+#     rf.fit(train_features, train_labels)
     
-     # Predict on the training and test set
-    train_pred_labels = rf.predict(train_features)
-    test_pred_labels = rf.predict(test_features)
+#      # Predict on the training and test set
+#     train_pred_labels = rf.predict(train_features)
+#     test_pred_labels = rf.predict(test_features)
     
-      # Compute performance metrics
-    print("Random Forest Classifier:")
+#       # Compute performance metrics
+#     print("Random Forest Classifier:")
     
-    # Training performance
-    print("Training Accuracy:", accuracy_score(train_labels, train_pred_labels))
-    print("Training Precision:", precision_score(train_labels, train_pred_labels))
-    print("Training Recall:", recall_score(train_labels, train_pred_labels))
-    print("Training F1 Score:", f1_score(train_labels, train_pred_labels))
+#     # Training performance
+#     print("Training Accuracy:", accuracy_score(train_labels, train_pred_labels))
+#     print("Training Precision:", precision_score(train_labels, train_pred_labels))
+#     print("Training Recall:", recall_score(train_labels, train_pred_labels))
+#     print("Training F1 Score:", f1_score(train_labels, train_pred_labels))
     
-    # Test performance
-    print("Test Accuracy:", accuracy_score(test_labels, test_pred_labels))
-    print("Test Precision:", precision_score(test_labels, test_pred_labels))
-    print("Test Recall:", recall_score(test_labels, test_pred_labels))
-    print("Test F1 Score:", f1_score(test_labels, test_pred_labels))
+#     # Test performance
+#     print("Test Accuracy:", accuracy_score(test_labels, test_pred_labels))
+#     print("Test Precision:", precision_score(test_labels, test_pred_labels))
+#     print("Test Recall:", recall_score(test_labels, test_pred_labels))
+#     print("Test F1 Score:", f1_score(test_labels, test_pred_labels))
     
-    # Compute confusion matrix
-    print("\nConfusion Matrix:")
-    print(confusion_matrix(test_labels, test_pred_labels))
+#     # Compute confusion matrix
+#     print("\nConfusion Matrix:")
+#     print(confusion_matrix(test_labels, test_pred_labels))
     
-    # Classification Report
-    print("\nClassification Report:")
-    print(classification_report(test_labels, test_pred_labels, target_names=['Blurry', 'Clear']))
+#     # Classification Report
+#     print("\nClassification Report:")
+#     print(classification_report(test_labels, test_pred_labels, target_names=['Blurry', 'Clear']))
 
 
-    # Save misclassified images
-    misclassified_dir = 'misclassified_imgs'
-    os.makedirs(misclassified_dir, exist_ok=True)
+#     # Save misclassified images
+#     misclassified_dir = 'misclassified_imgs'
+#     os.makedirs(misclassified_dir, exist_ok=True)
 
-    for img_path, true_label, pred_label in zip(test_paths, test_labels, test_pred_labels):
-        if true_label != pred_label:
-            img = cv2.imread(img_path)
-            if img is not None:
-                misclassified_filename = f"{os.path.basename(img_path)}_true_{true_label}_pred_{pred_label}.jpg"
-                misclassified_path = os.path.join(misclassified_dir, misclassified_filename)
-                cv2.imwrite(misclassified_path, img)
+#     for img_path, true_label, pred_label in zip(test_paths, test_labels, test_pred_labels):
+#         if true_label != pred_label:
+#             img = cv2.imread(img_path)
+#             if img is not None:
+#                 misclassified_filename = f"{os.path.basename(img_path)}_true_{true_label}_pred_{pred_label}.jpg"
+#                 misclassified_path = os.path.join(misclassified_dir, misclassified_filename)
+#                 cv2.imwrite(misclassified_path, img)
 
 
 
@@ -154,6 +148,15 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.model_selection import train_test_split, GridSearchCV
 from skimage.filters import sobel, roberts, laplace
 import joblib
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report, confusion_matrix
+
+
+
+# Function to compute Laplacian variance
+def variance_of_laplacian(image):
+    return cv2.Laplacian(image, cv2.CV_64F).var()
+
 
 # Creates directories for storing processed original images.
 def create_output_directories(output_dir):
@@ -269,15 +272,15 @@ def classify_and_save_images(model, output_dir, image_mapping, annotations):
             shutil.copy(original_path, os.path.join(dest_dir, os.path.basename(original_path)))
         
         # Save cropped image in the respective clear/blurry directory
-        if not os.path.exists(os.path.join(subset_dir, os.path.basename(original_path))):
-            shutil.copy(original_path, os.path.join(subset_dir, os.path.basename(original_path)))
+        #if not os.path.exists(os.path.join(subset_dir, os.path.basename(original_path))):
+        #    shutil.copy(original_path, os.path.join(subset_dir, os.path.basename(original_path)))
 
     save_annotations(original_clear_annotations, good_dir, "original_clear_annotations.json")
     save_annotations(original_clear_annotations, clear_dir, "original_clear_annotations.json")
-    print(f"\nNumber of blurry images:", len(os.listdir(blurry_dir)))
-    print(f"Number of clear images:", len(os.listdir(clear_dir)))
-    print(f"Number of bad images:", len(os.listdir(bad_dir)))
-    print(f"Number of good images:", len(os.listdir(good_dir)))
+    #print(f"\nNumber of blurry images:", len(os.listdir(blurry_dir)))
+    #print(f"Number of clear images:", len(os.listdir(clear_dir)))
+    #print(f"Number of bad images:", len(os.listdir(bad_dir)))
+    #print(f"Number of good images:", len(os.listdir(good_dir)))
 
 
 # Function to evaluate the SVM model with edge detection features
@@ -286,6 +289,10 @@ def evaluate_svm_model(clear_dir, blurry_dir):
     
     # Split data into train and test sets
     train_paths, test_paths, train_labels, test_labels = train_test_split(image_paths, labels, test_size=0.4, random_state=42)
+    print(len(image_paths))
+
+    print(len(train_paths))
+    print(len(test_paths))
     
     # Extract features
     train_features = extract_features(train_paths)
@@ -334,16 +341,29 @@ def evaluate_svm_model(clear_dir, blurry_dir):
     print(class_report)
 
 
-    
+    # Save misclassified images
+    misclassified_dir = 'misclassified_imgs'
+    os.makedirs(misclassified_dir, exist_ok=True)
 
-
+    for img_path, true_label, pred_label in zip(test_paths, test_labels, pred_labels):
+       if true_label != pred_label:
+          img = cv2.imread(img_path)
+          if img is not None:
+            misclassified_filename = f"{os.path.basename(img_path)}_true_{true_label}_pred_{pred_label}.jpg"
+            misclassified_path = os.path.join(misclassified_dir, misclassified_filename)
+            cv2.imwrite(misclassified_path, img)
 
     joblib.dump(best_svm, 'best_svm_model.pkl')
 
+
 if __name__ == "__main__":
     # Define the directories containing images
-    clear_images_dir = 'dataset/cropped_clear_imgs'
-    blurry_images_dir = 'dataset/cropped_blurry_imgs'
+    clear_images_dir = 'dataset/processed_imgs/clear_imgs'
+    blurry_images_dir = 'dataset/processed_imgs/blurry_imgs'
+
+    print("NUMBER OF CLEAR LABELLED IMAGES: ",len(os.listdir(clear_images_dir)))
+    print("NUMBER OF BLURRY LABELLED IMAGES",len(os.listdir(blurry_images_dir)))
+
 
     # Evaluate the SVM model with edge detection features
     evaluate_svm_model(clear_images_dir, blurry_images_dir)
