@@ -1,0 +1,53 @@
+
+CROP IMAGES:
+
+python data_processing/crop_images.py --input_dir dataset/failed_crop_subset --output_dir dataset/processed_imgs
+
+
+BLUR DETECTION:
+
+python data_processing/blur_detection.py --input_dir dataset/failed_crop_subset --mapping_dir dataset/processed_imgs/cropped_imgs --output_dir dataset/processed_imgs --threshold 60.0
+
+
+FRAGMENTATION:
+
+python data_processing/fragmentation.py -i dataset/processed_imgs/good_imgs -o dataset/processed_imgs/bad_imgs
+
+
+SPLIT DATA:
+python data_processing/split_data.py --input_dir dataset/failed_crop_subset --dataset_name dataset/processed_imgs --output_dir dataset/data_splits
+
+
+dataset/processed_imgs/blurry_imgs/CRALA3597-21.1024px.jpg
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ORIGINAL LAPLACIAN
+
+(Bioscan-ImgFilter) mga113@cs-3dlg-06:~/Documents/Mrinal 2024/Bioscan-ImgFilter/Bioscan-ImgFilter$ python data_processing/classical_blur_eval.py 
+Accuracy: 0.8548387096774194
+Precision: 0.9393939393939394
+Recall: 0.8157894736842105
+F1 Score: 0.8732394366197183
+
+Confusion Matrix:
+[[44  4]
+ [14 62]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+      Blurry       0.76      0.92      0.83        48
+       Clear       0.94      0.82      0.87        76
+
+    accuracy                           0.85       124
+   macro avg       0.85      0.87      0.85       124
+weighted avg       0.87      0.85      0.86       124
+
+(Bioscan-ImgFilter) mga113@cs-3dlg-06:~/Documents/Mrinal 2024/Bioscan-ImgFilter/Bioscan-ImgFilter$ 
+
+
+NEW MODIFIED BLUR DETECTION
+
