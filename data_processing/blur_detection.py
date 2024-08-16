@@ -151,8 +151,8 @@ def main(args):
     )
 
     # Randomly select 150 images to remain in the cropped clear images directory
-    randomly_select_images(os.path.join(args.output_dir, "clear_imgs"), 150)
-    print(f"Number of images in cropped clear images directory:", len(os.listdir(os.path.join(args.output_dir, "clear_imgs"))))
+    randomly_select_images(os.path.join(args.output_dir, "cropped_clear_imgs_manual"), 150)
+    print(f"Number of images in cropped clear images directory:", len(os.listdir(os.path.join(args.output_dir, "cropped_clear_imgs_manual"))))
 
 
 if __name__ == "__main__":

@@ -16,25 +16,25 @@ def create_output_directories(output_dir):
     bad_val_folder_path = os.path.join(val_folder_path, "bad")
 
     # Create train, clear/blurry directories
-    train_blur_detection = os.path.join(output_dir, "train_blur_detection")
-    train_clear_path = os.path.join(train_blur_detection, "clear")
-    train_blurry_path = os.path.join(train_blur_detection, "blurry")
+    train_blur_detection = os.path.join(output_dir, "uncropped_train_blur_detection")
+    unc_train_clear_path = os.path.join(train_blur_detection, "clear")
+    unc_train_blurry_path = os.path.join(train_blur_detection, "blurry")
 
     # Create validation, clear/blurry directories
-    val_blur_detection = os.path.join(output_dir, "val_blur_detection")
-    val_clear_path = os.path.join(val_blur_detection, "clear")
-    val_blurry_path = os.path.join(val_blur_detection, "blurry")
+    val_blur_detection = os.path.join(output_dir, "uncropped_val_blur_detection")
+    val_clear_path = os.path.join(val_blur_detection, "uncropped_clear")
+    val_blurry_path = os.path.join(val_blur_detection, "uncropped_blurry")
 
 
     # Create train, lab clear/blurry directories
-    lab_train_blur_detection = os.path.join(output_dir, "lab_train_blur_detection")
-    lab_train_clear_path = os.path.join(lab_train_blur_detection, "lab_clear")
-    lab_train_blurry_path = os.path.join(lab_train_blur_detection, "lab_blurry")
+    lab_train_blur_detection = os.path.join(output_dir, "cropped_train_blur_detection")
+    cropped_train_clear_path = os.path.join(lab_train_blur_detection, "crop_clear")
+    cropped_train_blurry_path = os.path.join(lab_train_blur_detection, "crop_blurry")
 
     # Create validation, clear/blurry directories
-    lab_val_blur_detection = os.path.join(output_dir, "lab_val_blur_detection")
-    lab_val_clear_path = os.path.join(lab_val_blur_detection, "lab_clear")
-    lab_val_blurry_path = os.path.join(lab_val_blur_detection, "lab_blurry")
+    lab_val_blur_detection = os.path.join(output_dir, "cropped_val_blur_detection")
+    lab_val_clear_path = os.path.join(lab_val_blur_detection, "crop_clear")
+    lab_val_blurry_path = os.path.join(lab_val_blur_detection, "crop_blurry")
 
     # Remove and reset directories if they previously existed
     if os.path.exists(train_folder_path) or os.path.exists(val_folder_path):
@@ -56,13 +56,13 @@ def create_output_directories(output_dir):
     os.makedirs(good_val_folder_path, exist_ok=True)
     os.makedirs(bad_val_folder_path, exist_ok=True)
 
-    os.makedirs(train_clear_path, exist_ok=True)
-    os.makedirs(train_blurry_path, exist_ok=True)
+    os.makedirs(unc_train_clear_path, exist_ok=True)
+    os.makedirs(unc_train_blurry_path, exist_ok=True)
     os.makedirs(val_clear_path, exist_ok=True)
     os.makedirs(val_blurry_path, exist_ok=True)
 
-    os.makedirs(lab_train_clear_path, exist_ok=True)
-    os.makedirs(lab_train_blurry_path, exist_ok=True)
+    os.makedirs(cropped_train_clear_path, exist_ok=True)
+    os.makedirs(cropped_train_blurry_path, exist_ok=True)
     os.makedirs(lab_val_clear_path, exist_ok=True)
     os.makedirs(lab_val_blurry_path, exist_ok=True)
 
@@ -72,13 +72,13 @@ def create_output_directories(output_dir):
         good_val_folder_path,
         bad_val_folder_path,
 
-        train_clear_path,
-        train_blurry_path,
+        unc_train_clear_path,
+        unc_train_blurry_path,
         val_clear_path,
         val_blurry_path,
 
-        lab_train_clear_path,
-        lab_train_blurry_path,
+        cropped_train_clear_path,
+        cropped_train_blurry_path,
         lab_val_clear_path,
         lab_val_blurry_path
     )
@@ -123,13 +123,13 @@ def split_data(args):
         good_val_folder_path,
         bad_val_folder_path,
 
-        train_clear_path,
-        train_blurry_path,
+        unc_train_clear_path,
+        unc_train_blurry_path,
         val_clear_path,
         val_blurry_path,
 
-        lab_train_clear_path,
-        lab_train_blurry_path,
+        cropped_train_clear_path,
+        cropped_train_blurry_path,
         lab_val_clear_path,
         lab_val_blurry_path
 
@@ -145,34 +145,39 @@ def split_data(args):
         for f in os.listdir(os.path.join(args.dataset_name, "bad_imgs"))
         if f.endswith(".jpg")
     ]
-    blurry_images = [
+    unc_blurry_images = [
         f
-        for f in os.listdir(os.path.join(args.dataset_name, "blurry_imgs"))
+        for f in os.listdir(os.path.join(args.dataset_name, "uncropped_blurry_imgs_labelled"))
         if f.endswith(".jpg")
     ]
-    clear_images = [
+    unc_clear_images = [
         f
-        for f in os.listdir(os.path.join(args.dataset_name, "clear_imgs"))
+        for f in os.listdir(os.path.join(args.dataset_name, "uncropped_clear_imgs_labelled"))
         if f.endswith(".jpg")
     ]
 
-    lab_clear_images = [
+    crop_clear_imgs = [
         f
         for f in os.listdir(os.path.join(args.dataset_name, "cropped_clear_imgs_manual"))
         if f.endswith(".jpg")
     ]
 
-    lab_blurry_images = [
+    crop_blurry_imgs = [
         f
         for f in os.listdir(os.path.join(args.dataset_name, "cropped_blurry_imgs_manual"))
         if f.endswith(".jpg")
     ]
 
-    num_lab_blurry_imgs = len((lab_blurry_images))
-    num_lab_clear_imgs = len((lab_clear_images))
+    num_cropped_blurry_imgs = len((crop_blurry_imgs))
+    num_cropped_clear_imgs = len((crop_clear_imgs))
+    num_uncropped_blurry_imgs = len((unc_blurry_images))
+    num_uncropped_clear_imgs = len((unc_clear_images))
 
-    print("LAB BLURRY IMAGES",num_lab_blurry_imgs)
-    print("LAB CLEAR IMAGES: ",num_lab_clear_imgs)
+    print("Total number of CROPPED blurry images",num_cropped_blurry_imgs)
+    print("TOtal number of CROPPED clear images: ",num_cropped_clear_imgs)
+
+    print("\nTotal number of UNCROPPED blurry images: ",num_uncropped_blurry_imgs)
+    print("TOtal number of CROPPED clear images: ",num_uncropped_clear_imgs)
 
 
 
@@ -180,11 +185,13 @@ def split_data(args):
     good_train_imgs, good_val_imgs = train_test_split(good_images, test_size=0.2)
     bad_train_imgs, bad_val_imgs = train_test_split(bad_images, test_size=0.2)
 
-    clear_train_imgs, good_val_imgs = train_test_split(clear_images, test_size=0.4)
-    blurry_train_imgs, bad_val_imgs = train_test_split(blurry_images, test_size=0.4)
+    # Split uncropped clear/blurry images into training and validation sets
+    clear_train_imgs, good_val_imgs = train_test_split(unc_clear_images, test_size=0.4)
+    blurry_train_imgs, bad_val_imgs = train_test_split(unc_blurry_images, test_size=0.4)
 
-    lab_clear_train_imgs, lab_clear_val_imgs = train_test_split(lab_clear_images, test_size=0.4)
-    lab_blurry_train_imgs, lab_blurry_val_imgs = train_test_split(lab_blurry_images, test_size=0.4)
+    # Split cropped clear/blurry images into training and validation sets
+    lab_clear_train_imgs, lab_clear_val_imgs = train_test_split(crop_clear_imgs, test_size=0.4)
+    lab_blurry_train_imgs, lab_blurry_val_imgs = train_test_split(crop_blurry_imgs, test_size=0.4)
 
     train_images, val_images = [], []
     train_annotations, val_annotations = [], []
@@ -216,11 +223,11 @@ def split_data(args):
         shutil.copyfile(src, dst)
 
 
-     # Copy and split "blurry" images
-    for img in blurry_images:
-        src = os.path.join(args.dataset_name, "blurry_imgs", img)
+    # Copy and split uncropped "blurry" images
+    for img in unc_blurry_images:
+        src = os.path.join(args.dataset_name, "uncropped_blurry_imgs_labelled", img)
         if img in blurry_train_imgs:
-            dst = os.path.join(train_blurry_path, img)
+            dst = os.path.join(unc_train_blurry_path, img)
             train_images.append({"file_name": img, "id": len(train_images)})
         else:
             dst = os.path.join(val_blurry_path, img)
@@ -230,11 +237,11 @@ def split_data(args):
         shutil.copyfile(src, dst)
 
 
-    # Copy and split "clear" images
-    for img in clear_images:
-        src = os.path.join(args.dataset_name, "clear_imgs", img)
+    # Copy and split uncropped "clear" images
+    for img in unc_clear_images:
+        src = os.path.join(args.dataset_name, "uncropped_clear_imgs_labelled", img)
         if img in clear_train_imgs:
-            dst = os.path.join(train_clear_path, img)
+            dst = os.path.join(unc_train_clear_path, img)
             train_images.append({"file_name": img, "id": len(train_images)})
         else:
             dst = os.path.join(val_clear_path, img)
@@ -245,11 +252,11 @@ def split_data(args):
 
 
 
-    # Copy and split "lab clear" images
-    for img in lab_clear_images:
+    # Copy and split cropped clear" images
+    for img in crop_clear_imgs:
         src = os.path.join(args.dataset_name, "cropped_clear_imgs_manual", img)
         if img in lab_clear_train_imgs:
-            dst = os.path.join(lab_train_clear_path, img)
+            dst = os.path.join(cropped_train_clear_path, img)
             train_images.append({"file_name": img, "id": len(train_images)})
         else:
             dst = os.path.join(lab_val_clear_path, img)
@@ -260,11 +267,11 @@ def split_data(args):
 
 
     
-    # Copy and split "lab blurry" images
-    for img in lab_blurry_images:
+    # Copy and split cropped blurry" images
+    for img in crop_blurry_imgs:
         src = os.path.join(args.dataset_name, "cropped_blurry_imgs_manual", img)
         if img in lab_blurry_train_imgs:
-            dst = os.path.join(lab_train_blurry_path, img)
+            dst = os.path.join(cropped_train_blurry_path, img)
             train_images.append({"file_name": img, "id": len(train_images)})
         else:
             dst = os.path.join(lab_val_blurry_path, img)
@@ -314,27 +321,27 @@ def split_data(args):
     #print(f"Number of good images in validation: {num_good_val}")
     #print(f"Number of bad images in validation: {num_bad_val}")
 
-    # Calculate and print the number of "good" and "bad" images in the training set
-    num_clear_train = len(os.listdir(train_clear_path))
-    num_blurry_train = len(os.listdir(train_blurry_path))
-    num_clear_val = len(os.listdir(val_clear_path))
-    num_blurry_val = len(os.listdir(val_blurry_path))
+    # Calculate and print the number of UNCROPPED images in the training set
+    unc_num_clear_train = len(os.listdir(unc_train_clear_path))
+    unc_num_blurry_train = len(os.listdir(unc_train_blurry_path))
+    unc_num_clear_val = len(os.listdir(val_clear_path))
+    unc_num_blurry_val = len(os.listdir(val_blurry_path))
 
+    # Calculate and print the number of CROPPED images in the training set
+    cropped_num_clear_train_lab = len(os.listdir(cropped_train_clear_path))
+    cropped_num_blurry_train_lab = len(os.listdir(cropped_train_blurry_path))
+    cropped_num_blurry_val_lab = len(os.listdir(lab_val_blurry_path))
+    cropped_num_clear_val_lab = len(os.listdir(lab_val_clear_path))
 
-    num_clear_train_lab = len(os.listdir(lab_train_clear_path))
-    num_blurry_train_lab = len(os.listdir(lab_train_blurry_path))
-    num_blurry_val_lab = len(os.listdir(lab_val_blurry_path))
-    num_clear_val_lab = len(os.listdir(lab_val_clear_path))
+    print(f"\nNumber of uncropped clear images in train: {unc_num_clear_train}")
+    print(f"Number of uncropped blurry images in train: {unc_num_blurry_train}")
+    print(f"Number of uncropped clear images in validation: {unc_num_clear_val}")
+    print(f"Number of uncropped blurry images in validation: {unc_num_blurry_val}\n")
 
-    print(f"Number of clear images in train: {num_clear_train}")
-    print(f"Number of blurry images in train: {num_blurry_train}")
-    print(f"Number of clear images in validation: {num_clear_val}")
-    print(f"Number of blurry images in validation: {num_blurry_val}")
-
-    #print(f"Number of clear LAB images in train: {num_clear_train_lab}")
-    #print(f"Number of blurry LAB images in train: {num_blurry_train_lab}")
-    #print(f"Number of clear LAB images in validation: {num_clear_val_lab}")
-    #print(f"Number of blurry LAB images in validation: {num_blurry_val_lab}")
+    print(f"\nNumber of cropped clear LAB images in train: {cropped_num_clear_train_lab}")
+    print(f"Number of cropped blurry LAB images in train: {cropped_num_blurry_train_lab}")
+    print(f"Number of cropped clear LAB images in validation: {cropped_num_clear_val_lab}")
+    print(f"Number of cropped blurry LAB images in validation: {cropped_num_blurry_val_lab}")
 
 
 if __name__ == "__main__":

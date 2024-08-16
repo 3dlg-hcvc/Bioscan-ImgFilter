@@ -21,7 +21,7 @@ sys.path.append(
 from dataloaders import get_data_loaders, get_datasets
 
 
-def train_model(train_loader, val_loader, n_epochs=24, use_wandb=False):
+def train_model(train_loader, val_loader, n_epochs=48, use_wandb=False):
     # Initialize the model,loss, optimizer,and training step function
     model, device = initialize_model()
     loss_fn = get_loss_fn()
@@ -66,9 +66,6 @@ def train_model(train_loader, val_loader, n_epochs=24, use_wandb=False):
 
             # Calculate training accuracy
             input_predictions = model(input_batch)
-            # correct_predictions += calculate_accuracy(
-            #     input_predictions, target_labels_batch
-            # )
 
             # Calculating F1 Score
             predicted_labels = torch.sigmoid(input_predictions) > 0.5
@@ -104,12 +101,7 @@ def train_model(train_loader, val_loader, n_epochs=24, use_wandb=False):
                 val_loss = loss_fn(input_predictions, target_labels_batch)
                 total_val_loss += val_loss.item() / len(val_loader)
 
-                # Calculate validation accuracy
-                # correct_predictions += calculate_accuracy(
-                #     input_predictions, target_labels_batch
-                # )
-
-                # Calculate vallidation F1 Score
+                # Calculate vallidation F1 Scorec
                 predicted_labels = torch.sigmoid(input_predictions) > 0.5
                 all_val_targets.extend(target_labels_batch.cpu().numpy())
                 all_val_predictions.extend(predicted_labels.cpu().numpy())
@@ -175,14 +167,14 @@ def main():
     args = parser.parse_args()
     
     # Define the directories containing the data
-    train_dir = "./dataset/data_splits/train_blur_detection"
-    val_dir = "./dataset/data_splits/val_blur_detection"
+    train_dir = "./dataset/data_splits/uncropped_train_blur_detection"
+    val_dir = "./dataset/data_splits/uncropped_val_blur_detection"
 
     # Call the function to get the datasets
     train_data, val_data = get_datasets(train_dir, val_dir)
 
     # Specify the batch size for the data loaders
-    batch_size = 15
+    batch_size = 10
 
     # Call the function to get the data loaders
     train_loader, val_loader = get_data_loaders(train_data, val_data, batch_size)
