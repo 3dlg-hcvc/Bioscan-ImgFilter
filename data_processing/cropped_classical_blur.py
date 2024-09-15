@@ -211,7 +211,7 @@ def evaluate_svm_model(clear_dir, blurry_dir):
 
 
     # Save misclassified images
-    misclassified_dir = 'misclassified_imgs_cropped'
+    misclassified_dir = 'misclassified_imgs/misclassified_imgs_cropped'
     os.makedirs(misclassified_dir, exist_ok=True)
 
     for img_path, true_label, pred_label in zip(test_paths, test_labels, pred_labels):
@@ -266,8 +266,8 @@ def store_labelled_uncropped_imgs(clear_images_dir, blurry_images_dir, image_map
 
 if __name__ == "__main__":
     # Define the directories containing images
-    clear_images_dir = 'dataset/cropped_clear_imgs_manual'
-    blurry_images_dir = 'dataset/cropped_blurry_imgs_manual'
+    clear_images_dir = 'dataset/labelled_datasets/cropped_clear_imgs_manual'
+    blurry_images_dir = 'dataset/labelled_datasets/cropped_blurry_imgs_manual'
 
     print("NUMBER OF CLEAR LABELLED IMAGES: ",len(os.listdir(clear_images_dir)))
     print("NUMBER OF BLURRY LABELLED IMAGES",len(os.listdir(blurry_images_dir)))
@@ -280,7 +280,7 @@ if __name__ == "__main__":
     best_model = joblib.load('best_svm_model.pkl')
 
     # Input directory for cropped images
-    cropped_images_dir = 'dataset/cropped_imgs'
+    cropped_images_dir = 'dataset/processed_imgs/cropped_imgs'
 
     # Output directory for classified images
     output_dir = "dataset/processed_imgs"

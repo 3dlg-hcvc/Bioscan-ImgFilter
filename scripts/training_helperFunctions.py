@@ -1,8 +1,14 @@
+import os
 from torch.nn.modules.loss import BCEWithLogitsLoss
 import torch
 import torchvision.models as models
 from torchvision.models import ResNet18_Weights
+import torchvision.transforms as T
+
 import torch.nn as nn
+from PIL import Image
+import numpy as np 
+
 
 
 # Training step for neural network
@@ -57,17 +63,37 @@ def get_loss_fn():
     return BCEWithLogitsLoss()
 
 
-# Calculate the accuracy
-def calculate_accuracy(predicted_val, true_val):
-    # Calculate accuracy using sigmoid function
-    predicted_val = torch.sigmoid(predicted_val)
-    predicted_val = (predicted_val > 0.5).float()
-    return (predicted_val == true_val).sum() / true_val.size(0)
 
+def misclassified_imgs(input_batch, predicted_labels, target_labels):
+    misclassified_dir = "misclassified_imgs"
+    os.makedirs(misclassified_dir, exist_ok=True)
 
-# Example usage:
-""" if __name__ == "__main__":
-    model = initialize_model()
-    loss_fn = get_loss_fn()
-    optimizer = torch.optim.Adam(model.fc.parameters())
-    train_step = make_train_step(model, optimizer, loss_fn) """
+    # Convert tensor to PIL image
+    transform = T.ToPILImage()
+
+    # Ensure tensors
+    # Ensure tensors are on CPU and detached from the graph
+    predicted_labels = predicted_labels.clone().detach().cpu()
+    target_labels = target_labels.clone().detach().cpu()
+
+    # Determine which images were misclassified
+    misclassified_indices = (predicted_labels.squeeze() != target_labels.squeeze()).cpu().numpy()
+   
+
+    for i in range(len(misclassified_indices)):
+        if misclassified_indices[i]:
+            # Convert the misclassified tensor image to a PIL image
+            misclassified_image = transform(
+                input_batch[i].cpu().clamp(0, 1).squeeze(0)  # Remove the batch dimension
+            )
+
+            # Get the true and predicted labels
+            true_label = int(target_labels[i].cpu().numpy().item())
+            predicted_label = int(predicted_labels[i].cpu().numpy().item())
+            file_name = f"idx_{i}_true_{true_label}_pred_{predicted_label}.png"
+            save_path = os.path.join(misclassified_dir, file_name)
+
+            # Debugging: Print the save path
+            #print(f"Saving misclassified image: {save_path}")
+
+            misclassified_image.save(save_path)

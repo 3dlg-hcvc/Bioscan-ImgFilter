@@ -1,3 +1,4 @@
+from pathlib import Path
 from sklearn.metrics import classification_report, confusion_matrix, f1_score, precision_score, recall_score, accuracy_score
 import torch
 import sys
@@ -6,22 +7,24 @@ import wandb
 from tqdm import tqdm
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 import argparse
+from training_helperFunctions import misclassified_imgs
+
 
 
 from training_helperFunctions import (
     initialize_model,
     get_loss_fn,
-    train_step,
-    calculate_accuracy,
+    train_step
 )
 
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), "../data_processing"))
 )
+# from scripts.dataloaders import get_data_loaders, get_datasets
 from dataloaders import get_data_loaders, get_datasets
 
 
-def train_model(train_loader, val_loader, n_epochs=48, use_wandb=False):
+def train_model(train_loader, val_loader, n_epochs=60, use_wandb=False):
     # Initialize the model,loss, optimizer,and training step function
     model, device = initialize_model()
     loss_fn = get_loss_fn()
@@ -48,7 +51,6 @@ def train_model(train_loader, val_loader, n_epochs=48, use_wandb=False):
     # Loop through each epoch
     for epoch in range(n_epochs):
         epoch_loss = 0
-        #correct_predictions = 0
         all_train_targets = []
         all_train_predictions = []
 
@@ -67,10 +69,11 @@ def train_model(train_loader, val_loader, n_epochs=48, use_wandb=False):
             # Calculate training accuracy
             input_predictions = model(input_batch)
 
-            # Calculating F1 Score
+            # Calculating good/bad class
             predicted_labels = torch.sigmoid(input_predictions) > 0.5
             all_train_targets.extend(target_labels_batch.cpu().numpy())
             all_train_predictions.extend(predicted_labels.cpu().numpy())
+
 
         train_accuracy = accuracy_score(all_train_targets,all_train_predictions)
         train_f1_score = f1_score(all_train_targets, all_train_predictions)
@@ -85,7 +88,6 @@ def train_model(train_loader, val_loader, n_epochs=48, use_wandb=False):
         model.eval()
         with torch.no_grad():
             total_val_loss = 0
-            #correct_predictions = 0
             all_val_predictions = []
             all_val_targets = []
 
@@ -101,21 +103,25 @@ def train_model(train_loader, val_loader, n_epochs=48, use_wandb=False):
                 val_loss = loss_fn(input_predictions, target_labels_batch)
                 total_val_loss += val_loss.item() / len(val_loader)
 
-                # Calculate vallidation F1 Scorec
+                # Calculate vallidation F1 Score
                 predicted_labels = torch.sigmoid(input_predictions) > 0.5
                 all_val_targets.extend(target_labels_batch.cpu().numpy())
                 all_val_predictions.extend(predicted_labels.cpu().numpy())
 
+                # Save misclassified images during the last epoch
+                if epoch == n_epochs - 1:
+                    misclassified_imgs(input_batch, predicted_labels, target_labels_batch)
+
+
             # Accuracy, F1 Score, and los over the entire epoch
-            #val_accuracy = correct_predictions.item() / len(val_loader)
             val_f1_score = f1_score(all_val_targets, all_val_predictions)
             val_accuracy = accuracy_score(all_val_targets, all_val_predictions)
             precision = precision_score(all_val_targets, all_val_predictions)
             recall = recall_score(all_val_targets, all_val_predictions)
-                # Compute confusion matrix
-
+            
+            # Compute confusion matrix
             conf_matrix = confusion_matrix(all_val_targets, all_val_predictions)
-            class_report = classification_report(all_val_targets, all_val_predictions, target_names=['Blurry', 'Clear'])
+            class_report = classification_report(all_val_targets, all_val_predictions, target_names=['Empty', 'Blurry'])
 
             print(
                 f"Epoch: {epoch+1}, Val Loss: {total_val_loss:.4f}, Val Accuracy: {val_accuracy*100:.4f}%, "
@@ -153,6 +159,7 @@ def train_model(train_loader, val_loader, n_epochs=48, use_wandb=False):
     # Load the best model weights
     model.load_state_dict(best_model_wts)
 
+
     # Finish the wandb run
     if use_wandb:
         wandb.finish()
@@ -167,8 +174,8 @@ def main():
     args = parser.parse_args()
     
     # Define the directories containing the data
-    train_dir = "./dataset/data_splits/uncropped_train_blur_detection"
-    val_dir = "./dataset/data_splits/uncropped_val_blur_detection"
+    train_dir = "./dataset/data_splits/train"
+    val_dir = "./dataset/data_splits/val"
 
     # Call the function to get the datasets
     train_data, val_data = get_datasets(train_dir, val_dir)

@@ -1,10 +1,8 @@
 import os
-import json
 import shutil
 import cv2
-import argparse
-from processing_helperFunctions import load_annotations, save_annotations
-
+from processing_helperFunctions import load_annotations, save_annotations, move_directory, create_output_directories
+from initial_filtering import compare_directories
 
 # Detects edges in an image using Canny edge detection.
 def detect_edges(image_path, threshold1=100, threshold2=150):
@@ -12,21 +10,13 @@ def detect_edges(image_path, threshold1=100, threshold2=150):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)  # convert to grayscale
     blurred = cv2.GaussianBlur(gray, (3, 3), 0)  # reduce noise
     edges = cv2.Canny(blurred, threshold1, threshold2)  # apply canny
-
     return edges
-
 
 # Checks if a bounding box is too close to the edge of the image.
 def too_close_to_edge(bbox, image_shape, margin=1):
-
-    # unpack bounding box coordinates
     left, top, width, height = bbox
     right, bottom = left + width, top + height
-
-    # extract the image's height and width
     img_height, img_width = image_shape[:2]
-
-    # returns true if the bounding box is too close to any image edge
     return (
         left <= margin
         or top <= margin
@@ -34,133 +24,68 @@ def too_close_to_edge(bbox, image_shape, margin=1):
         or bottom >= img_height - margin
     )
 
-
-# Chceks image size
+# Checks image size
 def is_small_object(bbox, max_width=100, max_height=100):
-
-    # Extracts bounded object's width and height
     width, height = bbox[2:]
-
-    # Returns true if bounded image is less than the max width and height
     return width < max_width and height < max_height
 
-
-# Create directories for storing fragmented images.
-def create_output_directories(output_dir):
-    bad_images_dir = os.path.join(output_dir, "bad_imgs")
-
-    fragmentated_dir = os.path.join(output_dir, "fragmented_imgs")
-
-    os.makedirs(fragmentated_dir, exist_ok=True)
-    return bad_images_dir, fragmentated_dir
-
-
 # Process images to isolate those with bounding boxes too close to the edges.
-def process_images(input_dir, output_dir, annotations, margin):
-    bad_imgs_dir, fragmented_dir = create_output_directories(os.path.dirname(output_dir))
+def process_images(uncropped_clear_dir, output_dir, annotations, margin, directories):
+    fragmented_dirs = create_output_directories(output_dir, directories)
+    fragmented_dir = fragmented_dirs[0] if fragmented_dirs else ""
 
     fragmented_annotations = {"images": [], "annotations": []}
+    original_clear_annotations = annotations.copy()
 
-    original_clear_annotations = annotations
-
-    # Loop through each image's annotations
+    
     for img in annotations["images"]:
-
-        # Configure the image's path
-        image_path = os.path.join(input_dir, img["file_name"])
-
-        # detect edges for each image
+        image_path = os.path.join(uncropped_clear_dir, img["file_name"])
         edges = detect_edges(image_path)
-
-        # Extract the image's height and width
         image_shape = edges.shape
 
-        # Creates a list that contains all th annotations for a specific image
-        img_annotations = [
-            ann for ann in annotations["annotations"] if ann["image_id"] == img["id"]
-        ]
+        img_annotations = [ann for ann in annotations["annotations"] if ann["image_id"] == img["id"]]
 
-        # Loop through each annotation value
         for ann in img_annotations:
-
-            # check if image is too close to the edge
-            if too_close_to_edge(ann["bbox"], image_shape, margin) and is_small_object(
-                ann["bbox"]
-            ):
-                fragmented_annotations["images"].append(
-                    {"id": img["id"], "file_name": img["file_name"]}
-                )
+            if too_close_to_edge(ann["bbox"], image_shape, margin) and is_small_object(ann["bbox"]):
+                fragmented_annotations["images"].append({"id": img["id"], "file_name": img["file_name"]})
                 fragmented_annotations["annotations"].append(ann)
 
-                # Check if the file already exists in the destination directories
-                bad_img_dest = os.path.join(bad_imgs_dir, img["file_name"])
                 fragmented_dest = os.path.join(fragmented_dir, img["file_name"])
-
-                if not os.path.exists(bad_img_dest):
-                    shutil.copy(image_path, bad_img_dest)
-
                 if not os.path.exists(fragmented_dest):
                     shutil.move(image_path, fragmented_dest)
 
-
-                # Remove the annotation from original clear annotations
-                original_clear_annotations["images"] = [
-                    image
-                    for image in original_clear_annotations["images"]
-                    if image["id"] != img["id"]
-                ]
-                original_clear_annotations["annotations"] = [
-                    annotation
-                    for annotation in original_clear_annotations["annotations"]
-                    if annotation != ann
-                ]
+                original_clear_annotations["images"] = [image for image in original_clear_annotations["images"] if image["id"] != img["id"]]
+                original_clear_annotations["annotations"] = [annotation for annotation in original_clear_annotations["annotations"] if annotation != ann]
 
                 break
 
-    # Save the modified original clear and fragmented annotations
     save_annotations(fragmented_annotations, fragmented_dir, "fragmented_annotations.json")
-    save_annotations(fragmented_annotations, bad_imgs_dir, "fragmented_annotations.json")
-    save_annotations(original_clear_annotations, input_dir,  "original_clear_annotations.json")
+    
+    # print(f"Total number of fragmented images:", len(os.listdir(fragmented_dir)))
+    # print(f"Total number of valid images:", len(os.listdir(uncropped_clear_dir)))
+    return len(os.listdir(fragmented_dir)),
 
-    num_new_clear_images = len(os.listdir(input_dir))
+def main():
+    
+    directories_paths = create_output_directories(output_dir, directories)
+    fragmented_dir = directories_paths[0] if directories_paths else ""
 
+    if len(os.listdir(fragmented_dir)) == 0:
 
-    print(f"Total number of fragmented images:", len(os.listdir(fragmented_dir)))
-    print(f"Total number of good images:", (num_new_clear_images))
-    print(f"Total number of bad images after fragmented images added: {len(os.listdir(bad_imgs_dir))}")
+        annotations = load_annotations(input_dir, "original_clear_annotations.json")
+        margin = 50
 
+        process_images(input_dir, fragmented_dir, annotations, margin, directories)
+        move_directory(input_dir, dest_dir)
 
-
-def main(args):
-
-    annotations = load_annotations(args.input_dir, "original_clear_annotations.json")
-    process_images(
-        args.input_dir, args.output_dir, annotations, args.margin
-    )
-   
-
+    else:
+        print()
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "-i",
-        "--input_dir",
-        required=True,
-        help="Path to input directory of original images and COCO file",
-    )
-    parser.add_argument(
-        "-o",
-        "--output_dir",
-        required=True,
-        help="Path to output directory of original images and COCO file",
-    )
+    input_dir = "dataset/filtered_imgs/invalid_imgs/uncropped_clear_imgs"
+    output_dir = "dataset/filtered_imgs/invalid_imgs"
+    dest_dir = "dataset/filtered_imgs/valid_imgs"
+    directories = ["fragmented_imgs"]  # Make sure this is a list
 
-    parser.add_argument(
-        "--margin",
-        type=int,
-        default=1,
-        help="Margin threshold to consider bounding boxes too close to the edge",
-    )
-    args = parser.parse_args()
+    main()
 
-    main(args)

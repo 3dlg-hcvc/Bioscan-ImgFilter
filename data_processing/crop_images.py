@@ -1,39 +1,11 @@
 import os
-import json
 import shutil
 from PIL import Image
-import argparse
-from processing_helperFunctions import load_annotations, save_annotations
-
-
-# Create directories to store cropped and unbounded images
-def create_directories(cropped_output_dir, unbounded_output_dir, unbounded_labelled, bounded_labelled):
-    os.makedirs(cropped_output_dir, exist_ok=True)
-    os.makedirs(unbounded_output_dir, exist_ok=True)
-
-    os.makedirs(unbounded_labelled, exist_ok=True)
-    os.makedirs(bounded_labelled, exist_ok=True)
-
-
-# Creates directories for storing processed original images.
-def create_output_directories(output_dir):
-
-    # create good and bad image directories
-    bad_images_dir = os.path.join(output_dir, "bad_imgs")
-    good_images_dir = os.path.join(output_dir, "good_imgs")
-    cropped_output_dir = os.path.join(output_dir,"cropped_imgs")
-    unbounded_output_dir = os.path.join(output_dir,"unbounded_imgs")
-
-
-    os.makedirs(cropped_output_dir, exist_ok=True)
-    os.makedirs(unbounded_output_dir, exist_ok=True)
-    os.makedirs(good_images_dir, exist_ok=True)
-    os.makedirs(bad_images_dir, exist_ok=True)
-    return bad_images_dir, good_images_dir, cropped_output_dir, unbounded_output_dir
+from processing_helperFunctions import load_annotations, save_annotations, create_output_directories
 
 
 # Crop image, store in respective directories, map cropped image to original
-def crop_image(image_path, img_annotations, cropped_output_dir, unbounded_output_dir, bad_images_dir, image_mapping):
+def process_crop_image(image_path, img_annotations, cropped_img_dir, empty_img_dir, image_mapping):
 
     # Check if the image path is valid
     if not os.path.exists(image_path):
@@ -60,7 +32,7 @@ def crop_image(image_path, img_annotations, cropped_output_dir, unbounded_output
             # Create the cropped image filename, move to the cropped directory, and save its path
             cropped_image_filename = f"{ann['image_id']}_{ann['id']}_cropped.jpg"
             cropped_image_path = os.path.join(
-                cropped_output_dir, cropped_image_filename
+                cropped_img_dir, cropped_image_filename
             )
             cropped_image.save(cropped_image_path)
 
@@ -70,63 +42,57 @@ def crop_image(image_path, img_annotations, cropped_output_dir, unbounded_output
     # If the image is unbounded, move it to the unbounded directory
     if is_unbounded:
         shutil.copy(
-            image_path, os.path.join(unbounded_output_dir, os.path.basename(image_path))
-        )
-        shutil.copy(
-            image_path, os.path.join(bad_images_dir, os.path.basename(image_path))
+            image_path, os.path.join(empty_img_dir, os.path.basename(image_path))
         )
 
 
 # Crop the image, store image in respective directories, create image mapping json file
-def process_image(args):
+def process_image(input_dir,output_dir,directories):
 
     # Load the image annotations
-    coco_annotation_dict = load_annotations(args.input_dir, "coco_annotations_processed.json")
+    coco_annotation_dict = load_annotations(input_dir, "coco_annotations_processed.json")
     images, annotations = (
         coco_annotation_dict["images"],
         coco_annotation_dict["annotations"],
     )
 
-    # Create cropped and unbounded directories for image storage
-    #create_directories(args.output_dir)
 
     # Create directories for image storage
-    bad_images_dir, good_images_dir, cropped_output_dir, unbounded_output_dir = create_output_directories(args.output_dir)
+    cropped_img_dir, empty_img_dir = create_output_directories(output_dir,directories)
     
 
     # Initialize image path mapping dictionary
     image_mapping = {}
     for img in images:
         image_id = img["id"]
-        image_path = os.path.join(args.input_dir, img["file_name"])
+        image_path = os.path.join(input_dir, img["file_name"])
         # Ensure that each image has a corresponding annotation
         img_annotations = [ann for ann in annotations if ann["image_id"] == image_id]
 
         # Crop the image and map the cropped path to the original
-        crop_image(
+        process_crop_image(
             image_path,
             img_annotations,
-            cropped_output_dir,
-            unbounded_output_dir,
-            bad_images_dir,
-            image_mapping,
+            cropped_img_dir,
+            empty_img_dir,
+            image_mapping
         )
 
     # Save the image mappings into a json file
-    save_annotations(image_mapping, cropped_output_dir, "image_mapping.json")
+    save_annotations(image_mapping, cropped_img_dir, "image_mapping.json")
 
-    num_unbounded = len(os.listdir(unbounded_output_dir))
-    num_cropped = len(os.listdir(cropped_output_dir))
+    num_unbounded = len(os.listdir(empty_img_dir))
+    num_cropped = len(os.listdir(cropped_img_dir))
 
-    print(num_cropped, f"Cropped images saved in {cropped_output_dir}")
-    print(num_unbounded, f"Unbounded images saved in {unbounded_output_dir}")
+    print(num_cropped, f"Cropped images saved in {cropped_img_dir}")
+    print(num_unbounded, f"Unbounded images saved in {empty_img_dir}")
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--input_dir", type=str, required=True, help="Path to the folder that contains the images and COCO file.")
-    parser.add_argument("--output_dir", type=str, required=True, help="Path to save processed images and output directories.")
 
-    args = parser.parse_args()
+    input_dir = "dataset/failed_crop_subset"
+    output_dir = "dataset/filtered_imgs/invalid_imgs"
 
-    process_image(args)
+    directories= ["cropped_imgs","empty_imgs"]
+
+    process_image(input_dir,output_dir,directories)
